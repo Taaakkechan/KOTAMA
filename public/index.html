@@ -1,0 +1,27 @@
+<html>
+<head>
+    <!-- Without this '×' may not be rendered correctly //-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet"> //-->
+    <title>KOTAMA</title>
+    <meta property='og:title' content='KOTAMA'/>
+    <meta property='og:description' content='My ideal task manager'>
+    <meta property='og:type' content='website'/>
+</head>
+<body>
+<div>
+    <script>
+        window.version = '0.3.83';
+        const mainScript = document.createElement('script');
+        mainScript.src = `client.js?v=${version}`;
+        document.body.append(mainScript);
+        const mainStyles = document.createElement('link');
+        mainStyles.type = 'text/css';
+        mainStyles.rel = 'stylesheet'
+        mainStyles.href = `styles.css?v=${version}`;
+        document.head.append(mainStyles);
+    </script>
+<!-- game -->
+</div>
+</body>
+</html>
