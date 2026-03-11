@@ -1,13 +1,13 @@
 import { testInputs } from 'app/development/testInput';
-import { Schedule } from 'app/schedule';
+import { TaskDataBase } from 'app/taskDataBase';
 
-let schedule: Schedule = {
+let taskDB: TaskDataBase = {
 	content: []
 };
 
-testInputs(schedule);
-console.log(schedule);
-console.log(schedule.content[0].title)
+testInputs(taskDB);
+console.log(taskDB);
+console.log(taskDB.content[0].title)
 
 function update(): void {
 return;
