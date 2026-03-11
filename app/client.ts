@@ -1,4 +1,12 @@
+import { testInputs } from 'app/development/testInput';
+// import { TaskDataBase } from 'app/taskDataBase';
+
+let dataBase: Task[] = [];
+
+testInputs(dataBase);
+console.log(dataBase);
+
 function update(): void {
-	console.log("Good night!")
+return;
 }
 setInterval(update, 1000);
