@@ -1,6 +1,6 @@
 import { DataBase } from 'app/dataBase';
 import { getTimeStamp } from 'app/date';
-// import { getTotalDuration } from 'app/task';
+import { isValid } from 'app/task';
 
 // This file is to make testing easier for the dev
 
@@ -20,41 +20,51 @@ import { getTimeStamp } from 'app/date';
 // realistically how many tasks in my schedule will I have? 5-10 everyday I guess I can adjust the window to however long I want to.
 // how about looking for conflicts?
 
-
-
-
-
-// function scheduleTasks(dataBase: DataBase, schedule: Schedule): void {
-// 	//repeat bois
-// 	const taskDB = dataBase.content
-// 	for (let i = 0; i < taskDB.length; i++) {
-// 		const task = taskDB[i]
-// 		if (!task.components && task.due && task.duration) {
-// 			if (task.repeatFreq) {
-// 				if (isValid(task, schedule)) {
-// 					schedule.content.push(task)
-// 				}
+// function isValid(tasks: Task[]): boolean {
+// 	if (task1.due && task2.due && task1.start && task2.start && task1.duration && task2.duration) {
+// 		if (isOverlapping(task1, task2)) {
+// 			const totalTime = Math.max(task1.due, task2.due) - Math.min(task1.start, task2.start);
+// 			if (totalTime < (task1.duration + task2.duration)) {
+// 				return false;
 // 			}
 // 		}
-// 	}
-// 	//event bois
-// 	for (let i = 0; i < taskDB.length; i++) {
-// 		const task = taskDB[i]
-// 		if (!task.components && task.due && task.duration && task.start) {
-// 			if (isValid(task, schedule)) {
-// 				schedule.content.push(task)
-// 			}	
-// 		}
-// 	}
-// 	//normy bois(also chanllenging)
-// 	for (let i = 0; i < taskDB.length; i++) {
-// 		const task = taskDB[i]
-// 		if (!task.components && task.due && task.duration) {
-// 			if (isValid(task, schedule)) {
-// 				schedule.content.push(task)
-// 			}	
-// 		}
-// 	}
+// 		return true;
+// 	} else {throw new Error('task due/start/duration undefined');}
+// }
+
+
+
+export function scheduleTasks(dataBase: DataBase, schedule: Schedule): void {
+	//repeat bois
+	const taskDB = dataBase.content
+	for (let i = 0; i < taskDB.length; i++) {
+		const task = taskDB[i]
+		if (!task.components && task.due && task.duration) {
+			if (task.repeatFreq) {
+				if (isValid(task, schedule)) {
+					schedule.content.push(task)
+				}
+			}
+		}
+	}
+	//event bois
+	for (let i = 0; i < taskDB.length; i++) {
+		const task = taskDB[i]
+		if (!task.components && task.due && task.duration && task.start) {
+			if (isValid(task, schedule)) {
+				schedule.content.push(task)
+			}	
+		}
+	}
+	//normy bois(also chanllenging)
+	for (let i = 0; i < taskDB.length; i++) {
+		const task = taskDB[i]
+		if (!task.components && task.due && task.duration) {
+			if (isValid(task, schedule)) {
+				schedule.content.push(task)
+			}	
+		}
+	}
 // 	// don't schedule tasks with components
 // 	// what about tasks with dependancy?
 // 	// check if task has duration and due
@@ -67,7 +77,7 @@ import { getTimeStamp } from 'app/date';
 // 	// or bring up a conflict solve request
 // 	// just a reminder this function is baiscally just a filter
 // 	// also, scheduling things without start is going to be challenging.
-// }
+}
 
 
 

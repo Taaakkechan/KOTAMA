@@ -1,23 +1,20 @@
-export function getTotalDuration(task: Task): number {
-	if (task.components) {
-		let duration = 0;
-		for (let i = 0; i < task.components.length; i++) {
-			if (task.components[i].duration) {
-				duration += task.components[i].duration!;
-			} else {throw new Error('duration undefined');}
-		}
-		return duration;
-	} else {throw new Error('components undefined');} 
+export function getTotalDuration(tasks: Task[]): number {
+	let duration = 0;
+	for (let i = 0; i < tasks.length; i++) {
+		if (tasks[i].duration) {
+			duration += tasks[i].duration!;
+		} else {throw new Error('duration undefined');}
+	}	return duration;
 }
 
-function isOverlapping(task1: Task, task2: Task): boolean {
-	if (task1.due && task2.due && task1.start && task2.start) {
-		if (!((task1.start > task2.due) || (task2.start > task1.due))) {
-			return true;
-		} 
-		return false;
-	} else {throw new Error('task due/start undefined');}
-}
+// function isOverlapping(task1: Task, task2: Task): boolean {
+// 	if (task1.due && task2.due && task1.start && task2.start) {
+// 		if (!((task1.start > task2.due) || (task2.start > task1.due))) {
+// 			return true;
+// 		} 
+// 		return false;
+// 	} else {throw new Error('task due/start undefined');}
+// }
 
 function findOverlappingTasks(tasks: Task[], schedule: Schedule): Task[] {
 
@@ -49,18 +46,21 @@ function findOverlappingTasks(tasks: Task[], schedule: Schedule): Task[] {
 	return tasks;
 }
 
-export function findAllOverlap(task: Task, schedule: Schedule): Task[] {
+export function isValid(task: Task, schedule: Schedule): boolean {
+
+	// finds all the chained overlapping tasks.
+	// maybe able to include it in the findOVerlappingTasks function
 	let tasks = [task];
 	let initialTasks = tasks;
 	let updatedTasks = findOverlappingTasks(initialTasks, schedule);
 	while (initialTasks.length != updatedTasks.length) {
 		initialTasks = updatedTasks;
-		updatedTasks = findOverlappingTasks(initalTasks, schedule);
+		updatedTasks = findOverlappingTasks(initialTasks, schedule);
 	}
-	return updatedTasks;
-}
+	tasks = updatedTasks;
 
-function isValid(tasks: Task[]): boolean {
+	// gets the start and due for a group of function again. 
+	// could separate it into a function (get start/ get end)
 	if (tasks[0].start && tasks[0].due) {
 		let startTask = tasks[0];
 		let dueTask = tasks[0];
@@ -75,5 +75,13 @@ function isValid(tasks: Task[]): boolean {
 				}
 			}
 		}
-	}
+
+		// actually compare the duration and the window
+		const totalDuration = getTotalDuration(tasks);
+		if (startTask.due! - startTask.start! > totalDuration) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {throw new Error('initial Task start/due undefined');}
 }
