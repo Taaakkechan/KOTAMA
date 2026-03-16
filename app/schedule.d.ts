@@ -1,0 +1,6 @@
+interface Schedule {
+	content: Task[]
+}
+
+
+

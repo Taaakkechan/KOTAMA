@@ -1,15 +1,17 @@
 import { testInputs } from 'app/development/testInput';
-import { TaskDataBase } from 'app/taskDataBase';
+import { DataBase } from 'app/dataBase';
 
-let taskDB: TaskDataBase = {
-	content: []
+let dataBase: DataBase = {
+	content: [],
+	subjects: []
 };
 
-testInputs(taskDB);
-console.log(taskDB);
-console.log(taskDB.content[0].title)
+testInputs(dataBase);
+console.log(dataBase);
+console.log(dataBase.content[0].title)
 
 function update(): void {
-return;
+	return;
 }
+
 setInterval(update, 1000);
