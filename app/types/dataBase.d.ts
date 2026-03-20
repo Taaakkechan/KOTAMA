@@ -1,4 +1,4 @@
-export interface DataBase {
+interface DataBase {
 	content: Task[]
 	subjects: Subject[]
 }

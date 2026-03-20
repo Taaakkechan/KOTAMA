@@ -1,6 +1,5 @@
-import { DataBase } from 'app/dataBase';
-import { getTimeStamp } from 'app/date';
-import { isValid } from 'app/task';
+import { getUTCTimeStamp } from 'app/date';
+// import { isValid } from 'app/task';
 
 // This file is to make testing easier for the dev
 
@@ -10,89 +9,91 @@ import { isValid } from 'app/task';
 
 
 
-
-
-
-// what do I need to get straitened with repeats with tasks?
-// check if it overlaps with other tasks.
-// breaking up repeat into repeat start end and adjusted.
-// man the more I think about it the more I think I should just make them individual tasks. I mean what's the point?
-// realistically how many tasks in my schedule will I have? 5-10 everyday I guess I can adjust the window to however long I want to.
-// how about looking for conflicts?
-
-// function isValid(tasks: Task[]): boolean {
-// 	if (task1.due && task2.due && task1.start && task2.start && task1.duration && task2.duration) {
-// 		if (isOverlapping(task1, task2)) {
-// 			const totalTime = Math.max(task1.due, task2.due) - Math.min(task1.start, task2.start);
-// 			if (totalTime < (task1.duration + task2.duration)) {
-// 				return false;
-// 			}
-// 		}
-// 		return true;
-// 	} else {throw new Error('task due/start/duration undefined');}
-// }
-
-
-
-export function scheduleTasks(dataBase: DataBase, schedule: Schedule): void {
-	//repeat bois
-	const taskDB = dataBase.content
-	for (let i = 0; i < taskDB.length; i++) {
-		const task = taskDB[i]
-		if (!task.components && task.due && task.duration) {
-			if (task.repeatFreq) {
-				if (isValid(task, schedule)) {
-					schedule.content.push(task)
-				}
-			}
-		}
-	}
-	//event bois
-	for (let i = 0; i < taskDB.length; i++) {
-		const task = taskDB[i]
-		if (!task.components && task.due && task.duration && task.start) {
-			if (isValid(task, schedule)) {
-				schedule.content.push(task)
-			}	
-		}
-	}
-	//normy bois(also chanllenging)
-	for (let i = 0; i < taskDB.length; i++) {
-		const task = taskDB[i]
-		if (!task.components && task.due && task.duration) {
-			if (isValid(task, schedule)) {
-				schedule.content.push(task)
-			}	
-		}
-	}
-// 	// don't schedule tasks with components
-// 	// what about tasks with dependancy?
-// 	// check if task has duration and due
-// 	// then schedule repeat
-// 	// then schedule with start
-// 	// then schedule the rest
-// 	// when schedule check if it is valid task scheduling
-// 		// first find all tasks that overlap with the task and then see if it's valid
-// 	// if not, bring up reschedule for the task with the smaller priority
-// 	// or bring up a conflict solve request
-// 	// just a reminder this function is baiscally just a filter
-// 	// also, scheduling things without start is going to be challenging.
-}
-
-
-
 export function testInputs(taskDB: DataBase): void {
-	let task14: Task = {
+	// title: string
+	// subjects: string[]
+	// priority: number
+	// owner: string
+	// description: string
+	// start: number
+	// due: number
+	// duration: number
+	// repeatFreq: number[]
+	// repeatStart: number
+	// repeatEnd: number
+	// dependancy: Task
+	// components: Task[]
+	let phsxLab: Task = {
+		title: 'PHSX 210 Lab',
+		priority: 2,
+		start: 7200 + 780,
+		due: 7200 + 890,
+		duration: 110,
+		repeatFreq: [10080],
+		owner: 'user',
+		subjects: ['KU']
+	}
+	let sleep: Task = {
+		title: 'sleep',
+		priority: 2,
+		start: 1260,
+		due: 360,
+		duration: 450,
+		repeatFreq: [1440],
+		owner: 'user',
+		subjects: ['userBody']
+	}
+	let testTopics: Task = {
+		title: "TestTopics",
+		priority: 2,
+		due: getUTCTimeStamp('2026-03-21T12:00'),
+		duration: 20,
+		owner: "user",
+		subjects: ["KU"]
+	}
+	let review: Task = {
+		title: "Review",
+		priority: 2,
+		due: getUTCTimeStamp('2026-03-21T12:00'),
+		duration: 30,
+		owner: "user",
+		subjects: ["KU"]
+	}
+	let practiceTest: Task = {
+		title: "Practice Test",
+		priority: 2,
+		due: getUTCTimeStamp('2026-03-21T12:00'),
+		duration: 60,
+		owner: "user",
+		subjects: ["KU"]
+	}
+	let Exam1: Task = {
+		title: "Exam1",
+		priority: 2,
+		due: getUTCTimeStamp('2026-03-21T12:00'),
+		components: [testTopics, review, practiceTest],
+		owner: "user",
+		subjects: ["KU"]
+	}
+	let randomEvent: Task = {
 		title: 'Random Event',
 		priority: 2,
-		start: getTimeStamp('2026-03-11T16:00'),
-		due: getTimeStamp('2026-03-11T19:00'),
+		start: getUTCTimeStamp('2026-03-20T16:00'),
+		due: getUTCTimeStamp('2026-03-20T19:00'),
 		duration: 100,
 		owner: 'user',
 		subjects: ['randomGuy']
 	}
-	taskDB.content.push(task14);
+	taskDB.content.push(phsxLab);
+	taskDB.content.push(sleep);
+	taskDB.content.push(testTopics);
+	taskDB.content.push(review);
+	taskDB.content.push(practiceTest);
+	taskDB.content.push(Exam1);
+	taskDB.content.push(randomEvent);
 }
+// end
+
 // let task15: Task = {
 // 		title: 'Random Event2',
 // 		priority: 2,
@@ -181,16 +182,7 @@ export function testInputs(taskDB: DataBase): void {
 // 		owner: 'user',
 // 		subjects: ['userBody']
 // 	}
-// 	let task6: Task = {
-// 		title: 'sleep',
-// 		priority: 2,
-// 		start: 1260,
-// 		due: 360,
-// 		duration: 450,
-// 		repeatFreq: [1440],
-// 		owner: 'user',
-// 		subjects: ['userBody']
-// 	}
+
 // 	let task1: Task = {
 // 		title: "HW1",
 // 		due: getTimeStamp('2026-04-01'),
@@ -223,7 +215,7 @@ export function testInputs(taskDB: DataBase): void {
 // 	let task5: Task = {
 // 		title: "Exam1",
 // 		priority: 2,
-// 		due: getTimeStamp('2026-04-05'),
+// 		due: getTimeStamp('2026-03-21T12:00'),
 // 		components: [task2, task3, task4],
 // 		owner: "user",
 // 		subjects: ["KU"]

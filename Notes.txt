@@ -1,0 +1,26 @@
+what am I going to do with this?
+
+when I'm scheduling a task, I will usually be doing it on a computer.
+actually it might be easier if I just did it on my phone.
+I should program it to make it easier for me to do it on my phone.
+will have to give it nice UI
+so when I'm like I wanto to do this in the future, I can just put that in there,
+but if I don't have a specific due, it won't schedule.
+what if I made a mistake on the input? I mean, the chances having a conflict on that level
+I believe will be super rare, so maybe it will just bring up a conflict solve request.
+then what is the priority for? 
+when I try and reschedule for something, 
+
+Let's think of a user story.
+
+I want to schedule a task
+I open app.
+maybe I get greeted. or not to reduce friction
+I have my options for adding task/ event and stuff
+I choose event
+I input the date and time that it will happen.
+I get a conflict because it overlaps with work.
+I then choose what event to choose. Or re-edit the task since it might have been a mistake.
+
+I guess priority will come in handy when scheduling tasks without starts.
+yeah for events, I guess I want to be able to schedule them

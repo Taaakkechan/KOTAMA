@@ -1,5 +1,16 @@
-Actually use a DataBase interface or type? so I can differenciate with a just a task sequence/ array
+Schedule 
+	- scheduling irregular repeats
+	- schedule start and end of repeat
+	- validness of task
+		- dependancy time checking
+		- include current time to the equation
+	- include priority when scheduling
 
-create a schedule or scheduler so I can apply logic to the task and schedule them
+Date
 
-Make UI
+TaskHandling
+	- include Task Dependancies
+
+- publish web browser
+- create UI (Input/output)
+- create save (local storage for now)

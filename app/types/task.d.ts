@@ -29,3 +29,18 @@ interface Task {
 	// Category?: string
 	// tags?: string
 }
+interface ScheduledTask {
+	title: string
+	subjects: string[]	//Subject[]
+	priority: number
+	owner?: string
+
+	description?: string
+
+	//create date interface
+	start?: number
+	due: number
+	duration: number
+
+	dependancy?: Task
+}
