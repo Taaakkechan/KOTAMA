@@ -1,41 +1,38 @@
+interface scheduleItem {
+	due: number
+	start?: number
+}
+
+interface repeatingItem extends scheduleItem{
+	repeatFreq: number[]
+	repeatStart: number
+	repeatEnd?: number
+}
+
+type scheduling = scheduleItem | repeatItem | 'pending' | 'none';
+
 interface Task {
 	title: string
-	subjects: string[]	//Subject[]
+	description: string
+	subjects: string[]
 	priority: number
-	owner?: string
+	owner: string
 
-	description?: string
+	scheduling: scheduling
 
-	//create date interface
-	start?: number
-	due?: number
 	duration?: number
-
-	repeatFreq?: number[]
-	repeatStart?: number
-	repeatEnd?: number
 
 	dependancy?: Task
 	components?: Task[]
 
-	//create person type and replace it with these
-
-
-
-	// //I have no idea how to implement this. A reference file.
-	// reference?: string
-
-	// //make searching easier. also make unique type for this.
-	// Category?: string
-	// tags?: string
 }
+
 interface ScheduledTask {
 	title: string
+	description: string
 	subjects: string[]	//Subject[]
 	priority: number
-	owner?: string
-
-	description?: string
+	owner: string
 
 	//create date interface
 	start?: number
@@ -43,4 +40,5 @@ interface ScheduledTask {
 	duration: number
 
 	dependancy?: Task
+	originalTask: Task
 }

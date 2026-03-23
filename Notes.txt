@@ -24,3 +24,10 @@ I then choose what event to choose. Or re-edit the task since it might have been
 
 I guess priority will come in handy when scheduling tasks without starts.
 yeah for events, I guess I want to be able to schedule them
+
+
+Thinking about UI
+
+First, I want to be able to see the must do and to do.
+then I want to be able to add new tasks to the database.
+I also want to be able to terminate a task when I'm done. Say goodbye

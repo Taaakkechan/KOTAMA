@@ -1,4 +1,4 @@
 interface TaskList {
-	mustDo: Task[]
-	toDo: Task[]
+	mustDo: ScheduledTask[]
+	toDo: ScheduledTask[]
 }

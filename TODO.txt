@@ -14,3 +14,7 @@ TaskHandling
 - publish web browser
 - create UI (Input/output)
 - create save (local storage for now)
+
+- refactor code
+
+- add log and duration tracking

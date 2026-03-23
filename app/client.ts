@@ -2,6 +2,8 @@ import { testInputs } from 'app/development/testInput';
 // import { DataBase } from 'app/dataBase';
 import { taskHandler } from 'app/taskHandler';
 import { scheduleTasks } from 'app/schedule';
+import { displayTasks } from 'app/ui';
+import { taskListDiv, scheduleDiv } from 'app/htmlElements';
 
 
 let dataBase: DataBase = {
@@ -24,6 +26,9 @@ console.log(dataBase.content);
 console.log(schedule.content);
 console.log(taskList.mustDo);
 console.log(taskList.toDo);
+displayTasks(taskList.mustDo, taskListDiv.mustDo);
+displayTasks(taskList.toDo, taskListDiv.toDo);
+displayTasks(schedule.content, scheduleDiv);
 
 
 
