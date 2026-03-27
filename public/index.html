@@ -22,18 +22,46 @@
         document.head.append(mainStyles);
     </script>
 <!-- game -->
-<div id="taskList">
+<div id="taskDBList">
 </div>
-<div id="taskWindow">
-    <div>title:</div>
-    <div>description:</div>
-    <div>subjects:</div>
-    <div>priority:</div>
-    <div>owner:</div>
-    <div>time:</div>
-    <div>duration:</div>
-    <div>dependancy:</div>
-    <div>components:</div>
+<div id="taskEditWindow">
+    <div id="taskTitle"><input id="taskDoneCheckBox" type="checkBox"><input id="taskTitleInput"><input id="isEventCheckBox" type="checkBox">event</div>
+    <div id="schedulingOptionContainer" >
+        <input type="radio" id="schedule" name="scheduleOption" >
+        <label for="schedule">Schedule</label>
+        <input type="radio" id="pending" name="scheduleOption" >
+        <label for="pending">Pending</label>
+        <input type="radio" id="none" name="scheduleOption" >
+        <label for="none">None</label>
+    </div>
+    <div id="schedule">
+        <div id="startInput"><input id="startCheckBox" type="checkBox"><input id="startDate" type="date"><input id="startTime" type="time"> to </div>
+        <div id="dueInput"><input id="dueTime" type="time"><input id="dueDate" type="date"></div>
+    </div>
+    <div id="repeatTask">
+        <input id="repeatCheckBox" type="checkBox"> Repeat 
+        <div id="repeatForm">
+            Frequency: <input id="repeatFreq" type="number"> <br>
+            repeatStart: <input id="repeatStartDate" type="date"><br>
+            <input id="repeatEndCheckBox" type="checkBox">repeatEnd: <input id="repeatEndDate" type="date">
+        </div>
+    </div>
+    <div id="duration"><input id="durationInput" type="number"> min</div>
+    <div id="priority">priority: <input id="priorityInput" type="number"></div>
+    <div id="description"><input id="descriptionInput"></div>
+    
+    <div id="dependancies"> dependancies
+        <div id="dependancyList"></div>
+    </div>
+    <div id="componenets"> components
+        <div id="componenetList"></div>
+    </div>
+    <div id="subjects"> subjects
+        <div id="subjectList"></div>
+    </div>
+    <div id="owner"> owner 
+        <div id="ownerList"></div>
+    </div>
 </div>
 </div>
 </body>

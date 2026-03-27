@@ -19,16 +19,7 @@ let taskList: TaskList = {
 	mustDo: [],
 	toDo: []
 }
-testInputs(dataBase);
-scheduleTasks(schedule, dataBase, 1440 * 30);
-taskHandler(schedule, taskList);
-console.log(dataBase.content);
-console.log(schedule.content);
-console.log(taskList.mustDo);
-console.log(taskList.toDo);
-displayTasks(taskList.mustDo, taskListDiv.mustDo);
-displayTasks(taskList.toDo, taskListDiv.toDo);
-displayTasks(schedule.content, scheduleDiv);
+
 
 
 

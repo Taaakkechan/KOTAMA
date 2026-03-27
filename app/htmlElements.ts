@@ -14,10 +14,17 @@ function getDiv(id: string): HTMLDivElement {
 // function getInput(id: string): HTMLInputElement {
 // 	return requireElementById(id) as HTMLInputElement;
 // }
-
+export const taskDBDiv = getDiv('taskDBList');
 export const taskListDiv = {
 	mustDo: getDiv('mustDo'),
 	toDo: getDiv('toDo')
+}
+
+export const taskEditWindow = {
+	title: getDiv('taskTitleInput')
+	schedulingOption = {
+		
+	}
 }
 
 export const scheduleDiv = getDiv('schedule');

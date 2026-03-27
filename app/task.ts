@@ -78,4 +78,29 @@ function isValid(task: Task, schedule: Schedule): boolean {
 	} else {throw new Error('initial Task start/due undefined');}
 }
 
+function defaultTask(): Task {
+	const now = getCurrentUTCTime();
+	const times: Scheduling = {
+		start: now,
+		due: now + 1399 - (now % 1440),
+		duration: 30
+	}
 
+	const newTask: Task = {
+		title: 'title',
+		description: 'description',
+		scheduling: times,
+		priority: 1,
+		dependancies: [],
+		components: [],
+		subjects: [],
+		owner: [user],
+	}
+	return newTask;
+}
+
+function insertTaskInfo(task: Task): void {
+	title.innerHTML = task.title;
+	
+	description.innerHTML = task.description;
+}
