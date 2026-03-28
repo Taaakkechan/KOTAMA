@@ -25,42 +25,43 @@
 <div id="taskDBList">
 </div>
 <div id="taskEditWindow">
-    <div id="taskTitle"><input id="taskDoneCheckBox" type="checkBox"><input id="taskTitleInput"><input id="isEventCheckBox" type="checkBox">event</div>
-    <div id="schedulingOptionContainer" >
-        <input type="radio" id="schedule" name="scheduleOption" >
+    <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
+    <div id="taskEditWindow-schedulingOption" >
+        <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
         <label for="schedule">Schedule</label>
-        <input type="radio" id="pending" name="scheduleOption" >
+        <input type="radio" id="taskEditWindow-isPending" name="scheduleOption" >
         <label for="pending">Pending</label>
-        <input type="radio" id="none" name="scheduleOption" >
+        <input type="radio" id="taskEditWindow-isNone" name="scheduleOption" >
         <label for="none">None</label>
     </div>
-    <div id="schedule">
-        <div id="startInput"><input id="startCheckBox" type="checkBox"><input id="startDate" type="date"><input id="startTime" type="time"> to </div>
-        <div id="dueInput"><input id="dueTime" type="time"><input id="dueDate" type="date"></div>
-    </div>
-    <div id="repeatTask">
-        <input id="repeatCheckBox" type="checkBox"> Repeat 
-        <div id="repeatForm">
-            Frequency: <input id="repeatFreq" type="number"> <br>
-            repeatStart: <input id="repeatStartDate" type="date"><br>
-            <input id="repeatEndCheckBox" type="checkBox">repeatEnd: <input id="repeatEndDate" type="date">
+    <div id="taskEditWindow-schedule">
+        <div id="taskEditWindow-startInput"><input id="taskEditWindow-start" type="dateTime-local"> to </div>
+        <div id="taskEditWindow-dueInput"><input id="taskEditWindow-due" type="dateTime-local"></div>
+        <div id="taskEditWindow-repeat">
+            <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
+            <div id="taskEditWindow-repeatForm">
+                Frequency: <input id="taskEditWindow-repeatFreq" type="number"> <br>
+                repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
+                <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
+            </div>
         </div>
     </div>
-    <div id="duration"><input id="durationInput" type="number"> min</div>
-    <div id="priority">priority: <input id="priorityInput" type="number"></div>
-    <div id="description"><input id="descriptionInput"></div>
     
-    <div id="dependancies"> dependancies
-        <div id="dependancyList"></div>
+    <div><input id="taskEditWindow-duration" type="number"> min</div>
+    <div>priority: <input id="taskEditWindow-priority" type="number"></div>
+    <div><input id="taskEditWindow-description"></div>
+    
+    <div> dependancies
+        <div id="taskEditWindow-dependancyList"></div>
     </div>
-    <div id="componenets"> components
-        <div id="componenetList"></div>
+    <div> components
+        <div id="taskEditWindow-componentList"></div>
     </div>
-    <div id="subjects"> subjects
-        <div id="subjectList"></div>
+    <div id="taskEditWindow-subjects"> subjects
+        <div id="taskEditWindow-subjectList"></div>
     </div>
-    <div id="owner"> owner 
-        <div id="ownerList"></div>
+    <div id="taskEditWindow-owner"> owner 
+        <div id="taskEditWindow-ownerList"></div>
     </div>
 </div>
 </div>

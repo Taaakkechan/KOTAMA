@@ -1,7 +1,7 @@
 interface RepeatingItem {
-	repeatFreq: number[]
+	repeatFreq: number
+	repeatStart: number
 	repeatEnd?: number
-	nextTask: ScheduledTask
 	exceptionIn: ScheduledTask[]
 	exceptionOut: ScheduledTask[]
 }
