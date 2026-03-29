@@ -18,3 +18,12 @@ TaskHandling
 - refactor code
 
 - add log and duration tracking
+
+2026-03-29
+
+- refactor code so client.ts isn't so crowded
+- add storage (localstorage)
+- make logic work with minimal html
+- make visuals cleaner
+- add calender
+- make task templates?

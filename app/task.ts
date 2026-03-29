@@ -79,7 +79,7 @@
 // }
 import { taskEditWindow } from 'app/htmlElements';
 import { numberToDateString, getCurrentTime, dateStringToNumber } from 'app/date';
-import { displayTaskList, displayPersonList } from 'app/ui';
+import { displayPersonList } from 'app/display';
 
 export function initTask(): Task {
 	const now = getCurrentTime();
@@ -215,4 +215,27 @@ export function getTaskIndexById(id: number, taskDB: DataBase): number {
 		}
 	}
 	throw new Error('task not found');
+}
+
+export function getListIndex(list: HTMLElement): number {
+	let Index = [...list.children].indexOf(event?.target as Element);
+	// schinanigins
+	return (Index - 1) / 2;
+}
+
+export function saveTask(currentTaskId: number, dataBase: DataBase): void {
+	const task = getTaskValue(getTaskById(currentTaskId, dataBase));
+	if (currentTaskId === 0) {
+		task.id = dataBase.nextId;
+		dataBase.nextId++;
+		dataBase.content.push(task);
+	} else {
+		dataBase.content[getTaskIndexById(currentTaskId, dataBase)] = task;
+	}
+}
+
+export function deleteTask(currentTaskId: number, dataBase: DataBase): void {
+	if (currentTaskId > 0) {
+		dataBase.content.splice(getTaskIndexById(currentTaskId, dataBase), 1);
+	}
 }
