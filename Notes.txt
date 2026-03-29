@@ -31,3 +31,18 @@ Thinking about UI
 First, I want to be able to see the must do and to do.
 then I want to be able to add new tasks to the database.
 I also want to be able to terminate a task when I'm done. Say goodbye
+
+
+OK so adding/editing tasks.
+what is the difference?
+
+place that I get original task is different.
+new -> initializedTask
+edit -> taskIndex/id
+
+I insert the info to html. that's the same.
+question 1: am I going to make a default task, or just make the html inputs as default?
+
+I edit the task. That's also same.
+
+but when saving, new Task gets pushed to data base(gains id at this point) while edited task gets replaced.

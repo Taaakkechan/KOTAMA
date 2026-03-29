@@ -22,9 +22,12 @@
         document.head.append(mainStyles);
     </script>
 <!-- game -->
-<div id="taskDBList">
-</div>
-<div id="taskEditWindow">
+<div style="position: absolute; right: 50; top: 50;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
+</div></div>
+
+<button id="createNewTask">+</button>
+<div id="taskEditWindow" style="display: none">
+    <button id="taskEditWindow-cancel"> cancel </button><button id="taskEditWindow-save"> save </button>
     <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
     <div id="taskEditWindow-schedulingOption" >
         <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
@@ -35,19 +38,18 @@
         <label for="none">None</label>
     </div>
     <div id="taskEditWindow-schedule">
-        <div id="taskEditWindow-startInput"><input id="taskEditWindow-start" type="dateTime-local"> to </div>
-        <div id="taskEditWindow-dueInput"><input id="taskEditWindow-due" type="dateTime-local"></div>
+        <input id="taskEditWindow-start" type="dateTime-local"> to <input id="taskEditWindow-due" type="dateTime-local">
+        <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
         <div id="taskEditWindow-repeat">
-            <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
             <div id="taskEditWindow-repeatForm">
                 Frequency: <input id="taskEditWindow-repeatFreq" type="number"> <br>
                 repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
                 <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
             </div>
         </div>
+        <div><input id="taskEditWindow-duration" type="number"> min</div>
     </div>
-    
-    <div><input id="taskEditWindow-duration" type="number"> min</div>
+     
     <div>priority: <input id="taskEditWindow-priority" type="number"></div>
     <div><input id="taskEditWindow-description"></div>
     
@@ -63,6 +65,8 @@
     <div id="taskEditWindow-owner"> owner 
         <div id="taskEditWindow-ownerList"></div>
     </div>
+    delete
+    <button id="taskEditWindow-delete"> delete</button>
 </div>
 </div>
 </body>

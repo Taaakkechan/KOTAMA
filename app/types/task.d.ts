@@ -17,6 +17,7 @@ interface ScheduleItem {
 type Scheduling = ScheduleItem | 'pending' | 'none';
 
 interface Task {
+	id: number
 	title: string
 	description: string
 	scheduling: Scheduling
@@ -25,8 +26,8 @@ interface Task {
 	priority: number
 	owner: string[]
 
-	dependancies: Task[]
-	components: Task[]
+	dependancies: number[]
+	components: number[]
 
 	completed?: boolean
 }
@@ -38,7 +39,7 @@ interface ScheduledTask {
 	due: number
 	duration: number
 	priority: number
-	originalTask: Task
+	taskId: number
 }
 
 // the thing that represents the task with only title
@@ -46,5 +47,5 @@ interface TaskBox {
 	title: string
 	dimensions: Rect
 	color: string
-	originalTask: Task
+	taskId: number
 }

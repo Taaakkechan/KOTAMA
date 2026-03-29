@@ -77,11 +77,11 @@
 // 		}
 // 	} else {throw new Error('initial Task start/due undefined');}
 // }
-import { taskEditWindowInputs, taskEditWindowDivs } from 'app/htmlElements';
-import { numberToDateString, getCurrentTime } from 'app/date';
+import { taskEditWindow } from 'app/htmlElements';
+import { numberToDateString, getCurrentTime, dateStringToNumber } from 'app/date';
 import { displayTaskList, displayPersonList } from 'app/ui';
 
-function defaultTask(): Task {
+export function initTask(): Task {
 	const now = getCurrentTime();
 	const times: Scheduling = {
 		start: now + 60 - (now % 60),
@@ -90,6 +90,7 @@ function defaultTask(): Task {
 	}
 
 	const newTask: Task = {
+		id: 0,
 		title: '',
 		description: '',
 		scheduling: times,
@@ -103,10 +104,10 @@ function defaultTask(): Task {
 	return newTask;
 }
 
-function insertTaskInfo(task: Task): void {
+export function insertTaskValue(task: Task): void {
 
-	const tewi = taskEditWindowInputs
-	const tewd = taskEditWindowDivs
+	const tewi = taskEditWindow.inputs
+	const tewd = taskEditWindow.divs
 
 	if (task.completed != null) {
 			tewi.isDone.checked = task.completed;
@@ -139,15 +140,15 @@ function insertTaskInfo(task: Task): void {
 	}
 	tewi.priority.value = String(task.priority);
 	tewi.description.value = task.description;
-	displayTaskList(task.dependancies, tewd.dependancyList);
-	displayTaskList(task.components, tewd.componentList);
+	// displayTaskList(task.dependancies, tewd.dependancyList);
+	// displayTaskList(task.components, tewd.componentList);
 	displayPersonList(task.subjects, tewd.subjectList);
 	displayPersonList(task.owner, tewd.ownerList);
 }
 
-function saveTask(task: Task): void {
+export function getTaskValue(task: Task): Task {
 
-	const tewi = taskEditWindowInputs
+	const tewi = taskEditWindow.inputs
 
 	task.title = tewi.title.value
 	if (!tewi.isEvent.checked) {
@@ -164,7 +165,7 @@ function saveTask(task: Task): void {
 			let exceptionIn = [] as ScheduledTask[];
 			let exceptionOut = [] as ScheduledTask[];
 			if (tewi.isRepeatEnd.checked) {
-				repeatEnd = Number(tewi.repeatEnd.value);
+				repeatEnd = dateStringToNumber(tewi.repeatEnd.value);
 			}
 			if (task.scheduling != 'pending' && task.scheduling != 'none') {
 				if (task.scheduling.repeating) {
@@ -173,23 +174,45 @@ function saveTask(task: Task): void {
 				}
 			}
 			repeat = {
-				repeatFreq: Number(tewi.repeatFreq.value),
-				repeatStart: Number(tewi.repeatStart.value),
+				repeatFreq: dateStringToNumber(tewi.repeatFreq.value),
+				repeatStart: dateStringToNumber(tewi.repeatStart.value),
 				repeatEnd: repeatEnd,
 				exceptionIn: exceptionIn,
 				exceptionOut: exceptionOut,
 			}
 		}
 		task.scheduling = {
-			start: Number(tewi.start.value),
-			due: Number(tewi.due.value),
+			start: dateStringToNumber(tewi.start.value),
+			due: dateStringToNumber(tewi.due.value),
 			duration: Number(tewi.duration.value),
 			repeating: repeat
 		}
 	}
 	task.priority = Number(tewi.priority.value);
 	task.description = tewi.description.value;
+	return task;
 }
-export function newTask(): void {
-	insertTaskInfo(defaultTask());
+
+export function getTaskById(id: number, taskDB: DataBase): Task {
+	if (id === 0) {
+		return initTask();
+	} 
+	for (let i = 0; i < taskDB.content.length; i++) {
+		if (id === taskDB.content[i].id) {
+			return taskDB.content[i];
+		}
+	}
+	throw new Error('task not found');
+}
+
+export function getTaskIndexById(id: number, taskDB: DataBase): number {
+	if (id <= 0 || id >= taskDB.nextId) {
+		throw new Error('invalid id');
+	} 
+	for (let i = 0; i < taskDB.content.length; i++) {
+		if (id === taskDB.content[i].id) {
+			return i;
+		}
+	}
+	throw new Error('task not found');
 }

@@ -17,7 +17,6 @@ export function numberToDateString(timeStamp: number): string {
 }	
 
 export function dateStringToNumber(dateTime: string): number {
-	const date = new Date();
 	return Date.parse(dateTime) / (1000 * 60) - getTimeOffset();
 }
 

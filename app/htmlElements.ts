@@ -5,47 +5,56 @@ function requireElementById(id: string) {
 	}
 	return element;
 }
-// function getButton(id: string): HTMLButtonElement {
-// 	return requireElementById(id) as HTMLButtonElement;
-// }
+function getButton(id: string): HTMLButtonElement {
+	return requireElementById(id) as HTMLButtonElement;
+}
 function getDiv(id: string): HTMLDivElement {
 	return requireElementById(id) as HTMLDivElement;
 }
 function getInput(id: string): HTMLInputElement {
 	return requireElementById(id) as HTMLInputElement;
 }
-export const taskDBDiv = getDiv('taskDBList');
+export const taskDBList = getDiv('taskDBList');
 // export const taskListDiv = {
 // 	mustDo: getDiv('mustDo'),
 // 	toDo: getDiv('toDo')
 // }
-export const taskEditWindow = getInput('taskEditWindow');
-export const taskEditWindowDivs = {
-	schedule: getDiv('taskEditWindow-schedule'),
-	repeat: getDiv('taskEditWindow-repeat'),
-	dependancyList: getDiv('taskEditWindow-dependancyList'),
-	componentList: getDiv('taskEditWindow-componentList'),
-	subjectList: getDiv('taskEditWindow-subjectList'),
-	ownerList: getDiv('taskEditWindow-ownerList'),
-}
 
-export const taskEditWindowInputs = {
-	title: getInput('taskEditWindow-taskTitle'),
-	isDone: getInput('taskEditWindow-isTaskDone'),
-	isEvent: getInput('taskEditWindow-isEvent'),
-	isSchedule: getInput('taskEditWindow-isSchedule'),
-	isPending: getInput('taskEditWindow-isPending'),
-	isNone: getInput('taskEditWindow-isNone'),
-	start: getInput('taskEditWindow-start'),
-	due: getInput('taskEditWindow-due'),
-	isRepeating: getInput('taskEditWindow-isRepeating'),
-	repeatFreq: getInput('taskEditWindow-repeatFreq'),
-	repeatStart: getInput('taskEditWindow-repeatStartDate'),
-	isRepeatEnd: getInput('taskEditWindow-isRepeatEnd'),
-	repeatEnd: getInput('taskEditWindow-repeatEndDate'),
-	duration: getInput('taskEditWindow-duration'),
-	priority: getInput('taskEditWindow-priority'),
-	description: getInput('taskEditWindow-description')
+export const createNewTask = getButton('createNewTask');
+
+export const taskEditWindow = {
+	divs: {
+		main: getDiv('taskEditWindow'),
+		schedule: getDiv('taskEditWindow-schedule'),
+		repeat: getDiv('taskEditWindow-repeat'),
+		dependancyList: getDiv('taskEditWindow-dependancyList'),
+		componentList: getDiv('taskEditWindow-componentList'),
+		subjectList: getDiv('taskEditWindow-subjectList'),
+		ownerList: getDiv('taskEditWindow-ownerList')
+	},
+	buttons: {
+		save: getButton('taskEditWindow-save'),
+		cancel: getButton('taskEditWindow-cancel'),
+		delete: getButton('taskEditWindow-delete')
+	},
+	inputs: {
+		title: getInput('taskEditWindow-taskTitle'),
+		isDone: getInput('taskEditWindow-isTaskDone'),
+		isEvent: getInput('taskEditWindow-isEvent'),
+		isSchedule: getInput('taskEditWindow-isSchedule'),
+		isPending: getInput('taskEditWindow-isPending'),
+		isNone: getInput('taskEditWindow-isNone'),
+		start: getInput('taskEditWindow-start'),
+		due: getInput('taskEditWindow-due'),
+		isRepeating: getInput('taskEditWindow-isRepeating'),
+		repeatFreq: getInput('taskEditWindow-repeatFreq'),
+		repeatStart: getInput('taskEditWindow-repeatStartDate'),
+		isRepeatEnd: getInput('taskEditWindow-isRepeatEnd'),
+		repeatEnd: getInput('taskEditWindow-repeatEndDate'),
+		duration: getInput('taskEditWindow-duration'),
+		priority: getInput('taskEditWindow-priority'),
+		description: getInput('taskEditWindow-description')
+	}
 }
 
 
