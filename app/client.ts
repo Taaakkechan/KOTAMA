@@ -2,12 +2,14 @@
 // import { DataBase } from 'app/dataBase';
 // import { taskHandler } from 'app/taskHandler';
 // import { scheduleTasks } from 'app/schedule';
-import { updateTaskEditWindowDisplay } from 'app/display';
+import { updateTaskEditWindowDisplay, updateLists } from 'app/display';
 // import { taskEditWindow, createNewTask, taskDBList } from 'app/htmlElements';
-import { getCurrentTime, numberToDateString, dateStringToNumber } from 'app/date';
+// import { getCurrentTime, numberToDateString, dateStringToNumber } from 'app/date';
 // import { initTask, insertTaskValue, getTaskValue, getTaskById, getTaskIndexById } from 'app/task';
 import { eventListener } from 'app/eventListener';
 
+
+// localStorage.clear();
 let dataBase: DataBase = {
 	content: [],
 	subjects: [],
@@ -22,11 +24,14 @@ let taskList: TaskList = {
 	toDo: []
 }
 let currentTaskId = 0;
-const now = getCurrentTime()
-console.log(now)
-console.log(numberToDateString(now));
-console.log(dateStringToNumber(numberToDateString(now)));
-console.log(numberToDateString(dateStringToNumber(numberToDateString(now))));
+
+const jsonString = localStorage.getItem("savedData");
+if (jsonString) {
+	dataBase = JSON.parse(jsonString);
+	console.log("data loaded");
+}
+
+updateLists(dataBase);
 
 eventListener(currentTaskId, dataBase);
 

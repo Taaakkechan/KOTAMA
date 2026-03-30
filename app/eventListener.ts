@@ -1,4 +1,5 @@
-import { initTask, insertTaskValue, getListIndex, saveTask, deleteTask } from 'app/task';
+import { getListIndex, saveTask, deleteTask, saveData } from 'app/dataBase';
+import { initTask, insertTaskValue } from 'app/task';
 import { taskEditWindowDisplay, updateLists } from 'app/display';
 import { taskEditWindow, taskDBList, createNewTask } from 'app/htmlElements';
 
@@ -21,7 +22,8 @@ export function eventListener(currentTaskId: number, dataBase: DataBase) {
 	taskEditWindow.buttons.save.onclick = ()=> {
 		taskEditWindowDisplay(false);
 		saveTask(currentTaskId, dataBase);
-		updateLists(dataBase);
+		saveData(dataBase);
+		updateLists(dataBase);	
 	}
 	taskEditWindow.buttons.cancel.onclick = ()=> {
 		taskEditWindowDisplay(false);
@@ -29,6 +31,7 @@ export function eventListener(currentTaskId: number, dataBase: DataBase) {
 	taskEditWindow.buttons.delete.onclick = ()=> {
 		taskEditWindowDisplay(false);
 		deleteTask(currentTaskId, dataBase);
+		saveData(dataBase);
 		updateLists(dataBase);
 	}
 }
