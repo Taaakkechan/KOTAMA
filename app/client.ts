@@ -2,16 +2,17 @@
 // import { DataBase } from 'app/dataBase';
 // import { taskHandler } from 'app/taskHandler';
 // import { scheduleTasks } from 'app/schedule';
-import { updateTaskEditWindowDisplay, updateLists } from 'app/display';
+import { updateTaskEditWindowDisplay, updateLists } from 'app/ui/display';
 // import { taskEditWindow, createNewTask, taskDBList } from 'app/htmlElements';
 // import { getCurrentTime, numberToDateString, dateStringToNumber } from 'app/date';
-// import { initTask, insertTaskValue, getTaskValue, getTaskById, getTaskIndexById } from 'app/task';
-import { eventListener } from 'app/eventListener';
+import { initTask } from 'app/task';
+import { eventListener } from 'app/ui/eventListener';
 
 
-// localStorage.clear();
+localStorage.clear();
 let dataBase: DataBase = {
 	content: [],
+	defaultTask: initTask(),
 	subjects: [],
 	nextId: 1
 }
@@ -31,7 +32,7 @@ if (jsonString) {
 	console.log("data loaded");
 }
 
-updateLists(dataBase);
+updateLists(dataBase, currentTaskId);
 
 eventListener(currentTaskId, dataBase);
 

@@ -1,0 +1,16 @@
+
+command to get copy of local_storage as a txt file on computer
+
+(() => { const data = JSON.stringify(localStorage); 
+	console.log(data); 
+	const blob= new Blob([data], {type: 'text/plain'}); 
+	console.log(blob); 
+	const url = URL.createObjectURL(blob); 
+	console.log(url); 
+	const a=document.createElement('a'); 
+	a.href=url; 
+	a.download='local_storage_download.txt'; 
+	a.click();
+}) 
+
+();

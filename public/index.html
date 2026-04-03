@@ -22,52 +22,57 @@
         document.head.append(mainStyles);
     </script>
 <!-- game -->
-<div style="position: absolute; right: 50; top: 50;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
-</div></div>
+<div id="main">
+    <div style="position: absolute; right: 50; top: 50;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
+    </div></div>
 
-<button id="createNewTask">+</button>
-<div id="taskEditWindow" style="display: none">
-    <button id="taskEditWindow-cancel"> cancel </button><button id="taskEditWindow-save"> save </button>
-    <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
-    <div id="taskEditWindow-schedulingOption" >
-        <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
-        <label for="schedule">Schedule</label>
-        <input type="radio" id="taskEditWindow-isPending" name="scheduleOption" >
-        <label for="pending">Pending</label>
-        <input type="radio" id="taskEditWindow-isNone" name="scheduleOption" >
-        <label for="none">None</label>
-    </div>
-    <div id="taskEditWindow-schedule">
-        <input id="taskEditWindow-start" type="dateTime-local"> to <input id="taskEditWindow-due" type="dateTime-local">
-        <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
-        <div id="taskEditWindow-repeat">
-            <div id="taskEditWindow-repeatForm">
-                Frequency: <input id="taskEditWindow-repeatFreq" type="number"> <br>
-                repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
-                <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
-            </div>
+    <button id="createNewTask">+</button>
+    <div id="taskEditWindow" style="display: none">
+        <button id="taskEditWindow-cancelEdit"> cancel </button><button id="taskEditWindow-saveEdit"> save </button>
+        <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
+        <div id="taskEditWindow-schedulingOption" >
+            <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
+            <label for="schedule">Schedule</label>
+            <input type="radio" id="taskEditWindow-isPending" name="scheduleOption" >
+            <label for="pending">Pending</label>
+            <input type="radio" id="taskEditWindow-isNone" name="scheduleOption" >
+            <label for="none">None</label>
         </div>
-        <div><input id="taskEditWindow-duration" type="number"> min</div>
+        <div id="taskEditWindow-schedule">
+            <input id="taskEditWindow-start" type="dateTime-local"> to <input id="taskEditWindow-due" type="dateTime-local">
+            <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
+            <div id="taskEditWindow-repeat">
+                <div id="taskEditWindow-repeatForm">
+                    Frequency: <input id="taskEditWindow-repeatFreq" type="number"> <br>
+                    repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
+                    <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
+                </div>
+            </div>
+            <div><input id="taskEditWindow-duration" type="number"> min</div>
+        </div>
+         
+        <div>priority: <input id="taskEditWindow-priority" type="number"></div>
+        <div><input id="taskEditWindow-description"></div>
+        
+        <div>dependancies<button id="taskEditWindow-addDependancy">+</button>
+            <div id="taskEditWindow-dependancyList"></div>
+        </div>
+        <div>components<button id="taskEditWindow-addComponent">+</button>
+            <div id="taskEditWindow-componentList"></div>
+        </div>
+        <div id="taskEditWindow-subjects"> subjects
+            <div id="taskEditWindow-subjectList"></div>
+        </div>
+        <div id="taskEditWindow-owner"> owner 
+            <div id="taskEditWindow-ownerList"></div>
+        </div>
+        delete
+        <button id="taskEditWindow-deleteTask"> delete</button>
+        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-component-taskSearch"></div></div>
+        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-dependancy-taskSearch"></div></div>
     </div>
-     
-    <div>priority: <input id="taskEditWindow-priority" type="number"></div>
-    <div><input id="taskEditWindow-description"></div>
-    
-    <div> dependancies
-        <div id="taskEditWindow-dependancyList"></div>
-    </div>
-    <div> components
-        <div id="taskEditWindow-componentList"></div>
-    </div>
-    <div id="taskEditWindow-subjects"> subjects
-        <div id="taskEditWindow-subjectList"></div>
-    </div>
-    <div id="taskEditWindow-owner"> owner 
-        <div id="taskEditWindow-ownerList"></div>
-    </div>
-    delete
-    <button id="taskEditWindow-delete"> delete</button>
 </div>
+
 </div>
 </body>
 </html>

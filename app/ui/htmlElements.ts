@@ -20,6 +20,7 @@ export const taskDBList = getDiv('taskDBList');
 // 	toDo: getDiv('toDo')
 // }
 
+export const mainApp = getDiv('main');
 export const createNewTask = getButton('createNewTask');
 
 export const taskEditWindow = {
@@ -30,12 +31,16 @@ export const taskEditWindow = {
 		dependancyList: getDiv('taskEditWindow-dependancyList'),
 		componentList: getDiv('taskEditWindow-componentList'),
 		subjectList: getDiv('taskEditWindow-subjectList'),
-		ownerList: getDiv('taskEditWindow-ownerList')
+		ownerList: getDiv('taskEditWindow-ownerList'),
+		componentTaskSearch: getDiv('taskEditWindow-component-taskSearch'),
+		dependancyTaskSearch: getDiv('taskEditWindow-dependancy-taskSearch'),
 	},
 	buttons: {
-		save: getButton('taskEditWindow-save'),
-		cancel: getButton('taskEditWindow-cancel'),
-		delete: getButton('taskEditWindow-delete')
+		saveEdit: getButton('taskEditWindow-saveEdit'),
+		cancelEdit: getButton('taskEditWindow-cancelEdit'),
+		deleteTask: getButton('taskEditWindow-deleteTask'),
+		addDependancy: getButton('taskEditWindow-addDependancy'),
+		addComponent: getButton('taskEditWindow-addComponent')
 	},
 	inputs: {
 		title: getInput('taskEditWindow-taskTitle'),

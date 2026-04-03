@@ -1,3 +1,4 @@
+
 what am I going to do with this?
 
 when I'm scheduling a task, I will usually be doing it on a computer.
@@ -46,3 +47,17 @@ question 1: am I going to make a default task, or just make the html inputs as d
 I edit the task. That's also same.
 
 but when saving, new Task gets pushed to data base(gains id at this point) while edited task gets replaced.
+
+2026-03-30
+
+All task boxes (buttons of tasks) are in a div as the original object is in a list of some sort
+so the index of the list corresponed to the index of the box in the div
+
+That object could be a scheduled version of the task or the original task.
+
+My original plan was to only look at the task in the DB, but that has limits when dealing with repeated tasks
+And yeah, google cal deals with that nicely. Just try and copy how google calendar does it. For the calender portion. editing tasks shouldn't be that bad at this point, since we got most of the functions we need.
+
+real question is getting the logic to work.
+But before that, we have a couple more ui problems to deal with like dependancies and components.
+and for that we need lists too. But once we get that down we are good to go(i think).

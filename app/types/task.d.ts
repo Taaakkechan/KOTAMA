@@ -47,5 +47,4 @@ interface TaskBox {
 	title: string
 	dimensions: Rect
 	color: string
-	taskId: number
 }
