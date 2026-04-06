@@ -1,5 +1,5 @@
 import { taskEditWindow, taskDBList } from 'app/ui/htmlElements';
-import { getTaskById, getTaskDependancies, getTaskComponents } from 'app/dataBase';
+import { getTaskDependancies, getTaskComponents } from 'app/dataBase';
 
 
 export function displayTaskList(list: Task[], element: HTMLElement, classes: string): void {
@@ -32,7 +32,30 @@ export function divDisplay(element: HTMLElement, display: boolean): void {
 	
 }
 
+export function getTaskListIndex(list: HTMLElement): number {
+	let Index = [...list.children].indexOf(event?.target as Element);
+	// schinanigins
+	return (Index - 1) / 2;
+}
+
+export function getTaskId(list: HTMLElement): number {
+	let id = [...list.children].value;
+	// schinanigins
+	return id;
+
+export function updateLists(dataBase: DataBase): void {
+	const task = currentState.tempTask;
+	const dependancies = getTaskDependancies(task, dataBase);
+	const components = getTaskComponents(task, dataBase);
+	displayTaskList(dataBase.tasks, taskDBList, 'dataBaseList');
+	displayTaskList(dataBase.tasks, taskEditWindow.divs.componentTaskSearch, 'taskSearchList');
+	displayTaskList(dataBase.tasks, taskEditWindow.divs.dependancyTaskSearch, 'taskSearchList');
+	displayTaskList(components, taskEditWindow.divs.componentList, 'taskComponents');
+	displayTaskList(dependancies, taskEditWindow.divs.dependancyList, 'taskDependancies');
+}
+
 export function updateTaskEditWindowDisplay(): void {
+
 	const tewi = taskEditWindow.inputs;
 	const tewd = taskEditWindow.divs;
 
@@ -62,19 +85,3 @@ export function updateTaskEditWindowDisplay(): void {
 	}
 }
 
-export function getListIndex(list: HTMLElement): number {
-	let Index = [...list.children].indexOf(event?.target as Element);
-	// schinanigins
-	return (Index - 1) / 2;
-}
-
-export function updateLists(dataBase: DataBase, currentTaskId: number): void {
-	const task = getTaskById(currentTaskId, dataBase);
-	const dependancies = getTaskDependancies(task, dataBase);
-	const components = getTaskComponents(task, dataBase);
-	displayTaskList(dataBase.content, taskDBList, 'dataBaseList');
-	displayTaskList(dataBase.content, taskEditWindow.divs.componentTaskSearch, 'taskSearchList');
-	displayTaskList(dataBase.content, taskEditWindow.divs.dependancyTaskSearch, 'taskSearchList');
-	displayTaskList(components, taskEditWindow.divs.componentList, 'taskComponents');
-	displayTaskList(dependancies, taskEditWindow.divs.dependancyList, 'taskDependancies');
-}

@@ -23,11 +23,11 @@
     </script>
 <!-- game -->
 <div id="main">
-    <div style="position: absolute; right: 50; top: 50;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
+    <div style="position: absolute; right: 50; top: 50; z-index: 0;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
     </div></div>
 
     <button id="createNewTask">+</button>
-    <div id="taskEditWindow" style="display: none">
+    <div id="taskEditWindow" style="background-color: lightgrey; display: none; z-index: 2;">
         <button id="taskEditWindow-cancelEdit"> cancel </button><button id="taskEditWindow-saveEdit"> save </button>
         <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
         <div id="taskEditWindow-schedulingOption" >
@@ -68,8 +68,8 @@
         </div>
         delete
         <button id="taskEditWindow-deleteTask"> delete</button>
-        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-component-taskSearch"></div></div>
-        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-dependancy-taskSearch"></div></div>
+        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-component-taskSearch" style="display: none;"></div></div>
+        <div style="position: absolute; top: 50; left: 600; z-index: 3; background: grey; display: block;">Task search<div id="taskEditWindow-dependancy-taskSearch" style="display: none;"></div></div>
     </div>
 </div>
 

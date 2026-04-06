@@ -3,6 +3,8 @@ import { initTask } from 'app/task';
 import { dateStringToNumber, numberToDateString } from 'app/date';
 import { taskEditWindow } from 'app/ui/htmlElements';
 
+
+
 export function insertTaskValue(task: Task): void {
 
 	const tewi = taskEditWindow.inputs;
@@ -95,24 +97,55 @@ export function getTaskValue(task: Task): Task {
 	return task;
 }
 
+// function resetTaskEditWindow(dataBase: DataBase, currentState: CurrentState): void {
+// 	currentState.tempTask = initTask();
+// 	curretState.taskId = 0;
+// }
+
 export function saveEdit(currentTaskId: number, dataBase: DataBase): void {
-	const editedTask = dataBase.defaultTask;
+	const editedTask = currentState.tempTask;
 	editedTask.id = currentTaskId;
 	if (currentTaskId === dataBase.nextId) {
-		dataBase.content.push(editedTask);
+		dataBase.tasks.push(editedTask);
 		dataBase.nextId++;
 	} else {
-		dataBase.content[getTaskIndexById(currentTaskId, dataBase)] = editedTask;
+		dataBase.tasks[getTaskIndexById(currentTaskId, dataBase)] = editedTask;
 	}
-	dataBase.defaultTask = initTask();
+	currentState.tempTask = initTask();
 }
 
 export function cancelEdit(dataBase: DataBase): void {
-	dataBase.defaultTask = initTask();
+	currentState.tempTask = initTask();
 }
 
-export function deleteTask(currentTaskId: number, dataBase: DataBase): void {
-	if (currentTaskId > 0) {
-		dataBase.content.splice(getTaskIndexById(currentTaskId, dataBase), 1);
+export function deleteTask(id: number, dataBase: DataBase): void {
+	const task = getTaskIndexById(id, dataBase);
+	const tasks = dataBase.tasks;
+	if (id > 0) {
+		tasks.splice(task, 1);
+		console.log('task deleted. id: ' + id);
+		console.log('task deleted. name: ' + id);
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks[i].components.length > 0) {
+				console.log('finding deleted task');
+				for (let j = 0; j < tasks[i].components.length; j++) {
+					console.log('checking compoents');
+					if (id === tasks[i].components[j]) {
+						tasks[i].components.splice(j, 1);
+						console.log(tasks[i]);
+						console.log('component deleted');
+					}
+				}
+				for (let j = 0; j < tasks[i].dependancies.length; j++) {
+					console.log('checking compoents');
+					if (id === tasks[i].dependancies[j]) {
+						tasks[i].dependancies.splice(j, 1);
+						console.log(tasks[i]);
+						console.log('dependancy deleted');
+					}
+				}
+			}
+		}
 	}
+	currentState.tempTask = initTask();
 }

@@ -1,21 +1,18 @@
 // import { testInputs } from 'app/development/testInput';
-// import { DataBase } from 'app/dataBase';
+import { getTaskById, getDataBase, dataBase } from 'app/dataBase';
 // import { taskHandler } from 'app/taskHandler';
 // import { scheduleTasks } from 'app/schedule';
 import { updateTaskEditWindowDisplay, updateLists } from 'app/ui/display';
-// import { taskEditWindow, createNewTask, taskDBList } from 'app/htmlElements';
+// import { mainApp } from 'app/ui/htmlElements';
 // import { getCurrentTime, numberToDateString, dateStringToNumber } from 'app/date';
 import { initTask } from 'app/task';
 import { eventListener } from 'app/ui/eventListener';
+// import { getTaskValue } from 'app/ui/taskEdit';
+
+dataBase = getDataBase();
 
 
-localStorage.clear();
-let dataBase: DataBase = {
-	content: [],
-	defaultTask: initTask(),
-	subjects: [],
-	nextId: 1
-}
+
 let schedule: Schedule = {
 	content: []
 }
@@ -24,20 +21,24 @@ let taskList: TaskList = {
 	mustDo: [],
 	toDo: []
 }
-let currentTaskId = 0;
-
-const jsonString = localStorage.getItem("savedData");
-if (jsonString) {
-	dataBase = JSON.parse(jsonString);
-	console.log("data loaded");
+let currentState: CurrentState = {
+	taskId: 0
+	tempTask: initTask();
 }
 
-updateLists(dataBase, currentTaskId);
 
-eventListener(currentTaskId, dataBase);
+
+updateLists(dataBase);
+
+eventListener(currentState, dataBase);
 
 function update(): void {
 	updateTaskEditWindowDisplay();
+		// if (currentState.taskId < dataBase.nextId) {
+		// 	console.log(currentState.taskId);
+		// }
+	// updateLists(dataBase);
+	console.log(currentState.tempTask);
 }
 
-setInterval(update, 20);
+setInterval(update, 100);

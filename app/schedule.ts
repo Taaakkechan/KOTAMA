@@ -5,7 +5,7 @@
 // export function scheduleTasks(schedule: Schedule, dataBase: DataBase, period: number): void {
 // 	const now = getCurrentUTCTime();
 // 	const windowEnd = now + period;
-// 	const taskDB = dataBase.content
+// 	const taskDB = dataBase.tasks
 // 	for (let i = 0; i < taskDB.length; i++) {
 // 		const task = taskDB[i]
 // 		if (!task.components && task.due && task.duration) {

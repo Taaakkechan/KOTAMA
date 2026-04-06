@@ -1,6 +1,6 @@
 interface DataBase {
-	content: Task[]
-	defaultTask: Task
+	tasks: Task[]
+	taskTemplates: Task[]
 	subjects: Subject[]
 	nextId: number
 }

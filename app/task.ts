@@ -102,3 +102,7 @@ export function initTask(): Task {
 	}
 	return newTask;
 }
+
+export function deepCloneTask(originalTask: Task): Task {
+	return JSON.parse(JSON.stringify(originalTask));
+}

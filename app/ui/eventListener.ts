@@ -1,24 +1,29 @@
 import { saveData } from 'app/dataBase';
-import { insertTaskValue, saveEdit, deleteTask } from 'app/ui/taskEdit';
+import { initTask, deepCloneTask } from 'app/task';
+import { insertTaskValue, getTaskValue, saveEdit, cancelEdit, deleteTask } from 'app/ui/taskEdit';
 import { getListIndex, divDisplay, updateLists } from 'app/ui/display';
 import { taskEditWindow, taskDBList, createNewTask } from 'app/ui/htmlElements';
 
-export function eventListener(currentTaskId: number, dataBase: DataBase) {
+export function addEventListeners(currentState: CurrentState, dataBase: DataBase) {
 
 	createNewTask.onclick = ()=> {
-		currentTaskId = dataBase.nextId;
-		insertTaskValue(dataBase.defaultTask);
+		currentState.taskId = dataBase.nextId;
+		insertTaskValue(currentState.tempTask);
 		divDisplay(taskEditWindow.divs.main, true);
 	}
 
 	taskDBList.onclick = ()=> {
 		const taskIndex = getListIndex(taskDBList);
+
 		if (taskIndex >= 0) {
-			currentTaskId = dataBase.content[taskIndex].id;
-			dataBase.defaultTask = dataBase.content[taskIndex]
-		insertTaskValue(dataBase.defaultTask);
-		divDisplay(taskEditWindow.divs.main, true);
-		}	
+			const originalTask = dataBase.tasks[taskIndex];
+			currentState.taskId = originalTask.id;
+			currentState.tempTask = deepCloneTask(originalTask);
+
+			insertTaskValue(currentState.tempTask);
+			divDisplay(taskEditWindow.divs.main, true);
+		}
+		updateLists(dataBase);
 	}
 
 
@@ -34,33 +39,37 @@ export function eventListener(currentTaskId: number, dataBase: DataBase) {
 	taskEditWindow.divs.componentTaskSearch.onclick = ()=> {
 		const taskIndex = getListIndex(taskEditWindow.divs.componentTaskSearch);
 		if (taskIndex >= 0) {
-			divDisplay(taskEditWindow.divs.componentTaskSearch, false);
-			dataBase.defaultTask.components.push(dataBase.content[taskIndex].id);
+			currentState.tempTask.components.push(dataBase.tasks[taskIndex].id);
+			updateLists(dataBase);
 		}
+		divDisplay(taskEditWindow.divs.componentTaskSearch, false);
 	}
 
 	taskEditWindow.divs.dependancyTaskSearch.onclick = ()=> {
 		const taskIndex = getListIndex(taskEditWindow.divs.dependancyTaskSearch);
 		if (taskIndex >= 0) {
-			divDisplay(taskEditWindow.divs.dependancyTaskSearch, false);
-			dataBase.defaultTask.dependancies.push(dataBase.content[taskIndex].id);
+			currentState.tempTask.dependancies.push(dataBase.tasks[taskIndex].id);
+			updateLists(dataBase);
 		}
+		divDisplay(taskEditWindow.divs.dependancyTaskSearch, false);
 	}
 
 
 	taskEditWindow.buttons.saveEdit.onclick = ()=> {
 		divDisplay(taskEditWindow.divs.main, false);
-		saveEdit(currentTaskId, dataBase);
+		getTaskValue(currentState.tempTask);
+		saveEdit(currentState.taskId, dataBase);
 		saveData(dataBase);
-		updateLists(dataBase, currentTaskId);	
+		updateLists(dataBase);
 	}
 	taskEditWindow.buttons.cancelEdit.onclick = ()=> {
 		divDisplay(taskEditWindow.divs.main, false);
+		cancelEdit(dataBase);
 	}
 	taskEditWindow.buttons.deleteTask.onclick = ()=> {
 		divDisplay(taskEditWindow.divs.main, false);
-		deleteTask(currentTaskId, dataBase);
+		deleteTask(currentState.taskId, dataBase);
 		saveData(dataBase);
-		updateLists(dataBase, currentTaskId);
+		updateLists(dataBase);
 	}
 }
