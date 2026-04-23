@@ -1,27 +1,4 @@
-import { taskEditWindow, taskDBList } from 'app/ui/htmlElements';
-import { getTaskDependancies, getTaskComponents } from 'app/dataBase';
-
-
-export function displayTaskList(list: Task[], element: HTMLElement, classes: string): void {
-	let listHTML = '';
-		for (let i = 0; i < list.length; i++) {
-		let title = list[i].title
-		const id = list[i].id
-			if (title === '') {
-				title = '(no title)';
-			}
-			listHTML += '<br><button value="' + String(id) + '" class="' + classes + '">' + title + '</button>';
-		}
-	element.innerHTML = listHTML;
-}
-
-export function displayPersonList(list: string[], id: HTMLElement): void {
-	let listHTML = '';
-		for (let i = 0; i < list.length; i++) {
-			listHTML += '<button>' + list[i] + '</button>';
-		}
-	id.innerHTML = listHTML;
-}
+import { taskEditWindow } from 'app/ui/htmlElements';
 
 export function divDisplay(element: HTMLElement, display: boolean): void {
 	if (display) {
@@ -30,28 +7,6 @@ export function divDisplay(element: HTMLElement, display: boolean): void {
 		element.style.display = 'none';
 	}
 	
-}
-
-export function getTaskListIndex(list: HTMLElement): number {
-	let Index = [...list.children].indexOf(event?.target as Element);
-	// schinanigins
-	return (Index - 1) / 2;
-}
-
-export function getTaskId(list: HTMLElement): number {
-	let id = [...list.children].value;
-	// schinanigins
-	return id;
-
-export function updateLists(dataBase: DataBase): void {
-	const task = currentState.tempTask;
-	const dependancies = getTaskDependancies(task, dataBase);
-	const components = getTaskComponents(task, dataBase);
-	displayTaskList(dataBase.tasks, taskDBList, 'dataBaseList');
-	displayTaskList(dataBase.tasks, taskEditWindow.divs.componentTaskSearch, 'taskSearchList');
-	displayTaskList(dataBase.tasks, taskEditWindow.divs.dependancyTaskSearch, 'taskSearchList');
-	displayTaskList(components, taskEditWindow.divs.componentList, 'taskComponents');
-	displayTaskList(dependancies, taskEditWindow.divs.dependancyList, 'taskDependancies');
 }
 
 export function updateTaskEditWindowDisplay(): void {

@@ -4,8 +4,7 @@ let currentState: CurrentState;
 
 export function inititalizeCurrentState(): CurrentState {
 	const initalState: CurrentState = {
-		taskId: 0;
-		tempTask: initTask();
+		tempTask: initTask()
 	}
 	return initalState;
 }

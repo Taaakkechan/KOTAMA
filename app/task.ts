@@ -78,6 +78,7 @@
 // 	} else {throw new Error('initial Task start/due undefined');}
 // }
 import { getCurrentTime } from 'app/date';
+import { getTaskById } from 'app/dataBase';
 
 
 export function initTask(): Task {
@@ -105,4 +106,40 @@ export function initTask(): Task {
 
 export function deepCloneTask(originalTask: Task): Task {
 	return JSON.parse(JSON.stringify(originalTask));
+}
+
+export function removeDependancy(task: Task, id: number): void {
+	const dependancies = task.dependancies;
+	for (let i = 0; i < dependancies.length; i++) {
+		if (dependancies[i] === id) {
+			dependancies.splice(i, 1);
+		}
+	}
+}
+
+export function removeComponent(task: Task, id: number): void {
+	const components = task.components;
+	for (let i = 0; i < components.length; i++) {
+		if (components[i] === id) {
+			components.splice(i, 1);
+		}
+	}
+}
+
+export function getTaskComponents(task: Task): Task[] {
+	const components = task.components
+	let taskList = [] as Task[]
+	for (let i = 0; i < components.length; i++) {
+		taskList.push(getTaskById(components[i])); 
+	}
+	return taskList;
+}
+
+export function getTaskDependancies(task: Task): Task[] {
+	const dependancies = task.dependancies
+	let taskList = [] as Task[]
+	for (let i = 0; i < dependancies.length; i++) {
+		taskList.push(getTaskById(dependancies[i])); 
+	}
+	return taskList;
 }
