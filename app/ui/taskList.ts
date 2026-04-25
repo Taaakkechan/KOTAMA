@@ -5,8 +5,8 @@ import { editingDependancyOnclick,
 
 import { taskBlockOnclick } from 'app/ui/buttonEvents/defaultEvents';
 
-import { getCurrentState } from 'app/currentState';
-import { getDataBase } from 'app/dataBase';
+import { currentState } from 'app/currentState';
+import { dataBase } from 'app/dataBase';
 import { taskEditWindow, taskDBList } from 'app/ui/htmlElements';
 import { getTaskDependancies, getTaskComponents } from 'app/task';
 
@@ -24,11 +24,11 @@ function createNewTaskBlock(parent: HTMLElement, task: Task, clickAction: (taskB
 	parent.append(newButton);
 }
 
-function removeAllTaskBlock(parent: HTMLElement): void {
+export function removeAllTaskBlock(parent: HTMLElement): void {
 	parent.replaceChildren();
 }
 
-function updateTaskList(taskList: Task[], parent: HTMLElement, className: string, clickAction: (taskBlock: HTMLElement) => void): void {
+export function updateHtmlLists(taskList: Task[], parent: HTMLElement, className: string, clickAction: (taskBlock: HTMLElement) => void): void {
 	removeAllTaskBlock(parent);
 	for (const task of taskList) {
 		createNewTaskBlock(parent, task, clickAction, className);
@@ -37,15 +37,13 @@ function updateTaskList(taskList: Task[], parent: HTMLElement, className: string
 
 export function updateAllLists(): void {
 	const tewd = taskEditWindow.divs;
-	const dataBase = getDataBase();
-	const currentState = getCurrentState();
 	const task = currentState.tempTask;
 
-	updateTaskList(dataBase.tasks, taskDBList, 'taskBlock', taskBlockOnclick);
+	updateHtmlLists(dataBase.tasks, taskDBList, 'taskBlock', taskBlockOnclick);
 
-	updateTaskList(dataBase.tasks, tewd.componentTaskSearch, 'taskSearchBlock', componentSearchOnclick);
-	updateTaskList(dataBase.tasks, tewd.dependancyTaskSearch, 'taskSearchBlock', dependancySearchOnclick);
-	updateTaskList(getTaskComponents(task), tewd.componentList, 'taskBlock', editingComponentOnclick);
-	updateTaskList(getTaskDependancies(task), tewd.dependancyList, 'taskBlock', editingDependancyOnclick);
+	updateHtmlLists(dataBase.tasks, tewd.componentTaskSearch, 'taskSearchBlock', componentSearchOnclick);
+	updateHtmlLists(dataBase.tasks, tewd.dependancyTaskSearch, 'taskSearchBlock', dependancySearchOnclick);
+	updateHtmlLists(getTaskComponents(task), tewd.componentList, 'taskBlock', editingComponentOnclick);
+	updateHtmlLists(getTaskDependancies(task), tewd.dependancyList, 'taskBlock', editingDependancyOnclick);
 
 }

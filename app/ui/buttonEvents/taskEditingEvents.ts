@@ -1,12 +1,10 @@
 import { updateAllLists } from 'app/ui/taskList';
-import { getCurrentState } from 'app/currentState';
+import { currentState } from 'app/currentState';
 import { removeComponent, removeDependancy, initTask } from 'app/task';
 import { divDisplay } from 'app/ui/display';
 import { taskEditWindow } from 'app/ui/htmlElements';
 import { removeTask, insertTask	} from 'app/dataBase';
-import { getTaskValue } from 'app/ui/taskEditing';
-
-const currentState = getCurrentState();
+import { retrieveValue, resetTaskEditWindow } from 'app/ui/taskEditing';
 
 const tewb = taskEditWindow.buttons;
 
@@ -16,16 +14,18 @@ export function taskEditingStaticEvents(): void {
 	// save edit
 	tewb.saveEdit.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.main, false);
-		getTaskValue(currentState.tempTask);
+		retrieveValue(currentState.tempTask);
 		insertTask(currentState.tempTask);
 		currentState.tempTask = initTask();
 		updateAllLists();
+		resetTaskEditWindow();
 	})
 
 	// cancel edit
 	tewb.cancelEdit.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.main, false);
 		currentState.tempTask = initTask();
+		resetTaskEditWindow();
 	})
 
 	// delete edit
@@ -34,6 +34,14 @@ export function taskEditingStaticEvents(): void {
 		removeTask(currentState.tempTask.id);
 		currentState.tempTask = initTask();
 		updateAllLists();
+		resetTaskEditWindow();
+	})
+
+	tewb.addComponent.addEventListener('click', function () {
+		divDisplay(taskEditWindow.divs.componentTaskSearch, true);
+	})
+	tewb.addDependancy.addEventListener('click', function () {
+		divDisplay(taskEditWindow.divs.dependancyTaskSearch, true);
 	})
 }
 

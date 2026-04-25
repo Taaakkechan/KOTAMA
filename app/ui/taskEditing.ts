@@ -1,10 +1,13 @@
-import { dateStringToNumber, numberToDateString } from 'app/date';
+import { dateStringToNumber, numberToDateTimeString, numberToDateString } from 'app/date';
 import { taskEditWindow } from 'app/ui/htmlElements';
+import { updateHtmlLists, removeAllTaskBlock } from 'app/ui/taskList';
+import { editingComponentOnclick, editingDependancyOnclick } from 'app/ui/buttonEvents/taskEditingEvents';
+import { getTaskDependancies, getTaskComponents } from 'app/task';
 
-export function insertTaskValue(task: Task): void {
+export function populateEditWindow(task: Task): void {
 
 	const tewi = taskEditWindow.inputs;
-	// const tewd = taskEditWindow.divs;
+	const tewd = taskEditWindow.divs;
 
 	if (task.completed != null) {
 			tewi.isDone.checked = task.completed;
@@ -20,31 +23,28 @@ export function insertTaskValue(task: Task): void {
 	} else {
 		const schedule = task.scheduling ;
 		tewi.isSchedule.checked = true;
-		tewi.start.value = String(numberToDateString(schedule.start));
-		tewi.due.value = String(numberToDateString(schedule.due));
+		tewi.start.value = numberToDateTimeString(schedule.start);
+		tewi.due.value = numberToDateTimeString(schedule.due);
 		tewi.duration.value = String(schedule.duration);
 		if (schedule.repeating) {
 			const repeating = schedule.repeating;
 			tewi.isRepeating.checked = true;
 			tewi.repeatFreq.value = String(repeating.repeatFreq);
-			tewi.repeatStart.value = String(repeating.repeatStart);
+			tewi.repeatStart.value = numberToDateString(repeating.repeatStart);
 			if (repeating.repeatEnd) {
 				tewi.isRepeatEnd.checked = true;
-				tewi.repeatEnd.value = String(repeating.repeatEnd);
+				tewi.repeatEnd.value = numberToDateString(repeating.repeatEnd);
 			}
 		}
 
 	}
 	tewi.priority.value = String(task.priority);
 	tewi.description.value = task.description;
-	// displayTaskList(task.dependancies, tewd.dependancyList);
-	// displayTaskList(task.components, tewd.componentList);
-	// displayPersonList(task.subjects, tewd.subjectList);
-	// displayPersonList(task.owner, tewd.ownerList);
+	updateHtmlLists(getTaskComponents(task), tewd.componentList, 'taskBlock', editingComponentOnclick);
+	updateHtmlLists(getTaskDependancies(task), tewd.dependancyList, 'taskBlock', editingDependancyOnclick);
 }
 
-export function getTaskValue(task: Task): Task {
-
+export function retrieveValue(task: Task): Task {
 	const tewi = taskEditWindow.inputs
 	task.completed = undefined
 	task.title = tewi.title.value
@@ -73,7 +73,7 @@ export function getTaskValue(task: Task): Task {
 				}
 			}
 			repeat = {
-				repeatFreq: dateStringToNumber(tewi.repeatFreq.value),
+				repeatFreq: Number(tewi.repeatFreq.value),
 				repeatStart: dateStringToNumber(tewi.repeatStart.value),
 				repeatEnd: repeatEnd,
 				exceptionIn: exceptionIn,
@@ -89,6 +89,12 @@ export function getTaskValue(task: Task): Task {
 	}
 	task.priority = Number(tewi.priority.value);
 	task.description = tewi.description.value;
-
+	console.log(task);
 	return task;
+}
+
+export function resetTaskEditWindow(): void {
+	const tewd = taskEditWindow.divs
+	removeAllTaskBlock(tewd.componentList);
+	removeAllTaskBlock(tewd.dependancyList);
 }

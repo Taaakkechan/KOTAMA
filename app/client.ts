@@ -1,32 +1,27 @@
 // import { testInputs } from 'app/development/testInput';
-import { getDataBase, loadDataBase } from 'app/dataBase';
+import { loadDataBase,clearSavedData } from 'app/dataBase';
 // import { taskHandler } from 'app/taskHandler';
 // import { scheduleTasks } from 'app/schedule';
 import { updateTaskEditWindowDisplay } from 'app/ui/display';
 // import { mainApp } from 'app/ui/htmlElements';
-// import { getCurrentTime, numberToDateString, dateStringToNumber } from 'app/date';
-import { initTask } from 'app/task';
+// import { getCurrentTime, numberToDateTimeString, dateStringToNumber } from 'app/date';
+// import { initTask } from 'app/task';
 import { eventListeners } from 'app/ui/eventListener';
-// import { getTaskValue } from 'app/ui/taskEdit';
+import { loadInitialState } from 'app/currentState';
+// import { retrieveValue } from 'app/ui/taskEdit';
 
+clearSavedData();
+loadInitialState();
 loadDataBase();
 
-const dataBase = getDataBase();
+// let schedule: Schedule = {
+// 	content: []
+// }
 
-
-
-let schedule: Schedule = {
-	content: []
-}
-
-let taskLists: TaskLists = {
-	mustDo: [],
-	toDo: []
-}
-let currentState: CurrentState = {
-	tempTask: initTask()
-}
-
+// let taskLists: TaskLists = {
+// 	mustDo: [],
+// 	toDo: []
+// }
 
 eventListeners();
 

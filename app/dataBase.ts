@@ -1,6 +1,6 @@
 import { initTask, removeComponent, removeDependancy } from 'app/task';
 
-let dataBase: DataBase;
+export let dataBase: DataBase;
 
 function initializeDataBase(): DataBase {
 	const defaultDataBase: DataBase = {
@@ -27,9 +27,11 @@ export function clearSavedData(): void {
 	localStorage.removeItem("savedData");
 }
 
-export function getDataBase(): DataBase {
-	return dataBase;
-}
+
+// same with dataBase with state
+// export function getDataBase(): DataBase {
+// 	return dataBase;
+// }
 
 export function getTaskById(id: number): Task {
 	if (id === 0) {
@@ -47,7 +49,7 @@ function getTaskIndex(id: number): number {
 	if (id <= 0 || id >= dataBase.nextId) {
 		throw new Error('invalid id');
 	} 
-	for (let i = 1; i < dataBase.tasks.length; i++) {
+	for (let i = 0; i < dataBase.tasks.length; i++) {
 		if (id === dataBase.tasks[i].id) {
 			return i;
 		}
