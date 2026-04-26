@@ -23,16 +23,22 @@
     </script>
 <!-- game -->
 <div id="main">
-    <div style="position: absolute; right: 50; top: 50; z-index: 0;"> taskListContainer <br> <div id="taskDBList" style=" float: right">
-    </div></div>
 
     <button id="createNewTask">+</button>
 
-
-    <div id="taskEditWindow" style="background-color: lightgrey; display: none; z-index: 2;">
+    <!-- task edit window -->
+    <div id="taskEditWindow" style="background-color: lightgrey; display: none; z-index: 1;">
         
-        <button id="taskEditWindow-cancelEdit"> cancel </button><button id="taskEditWindow-saveEdit"> save </button>
-        <div><input id="taskEditWindow-isTaskDone" type="checkBox"><input id="taskEditWindow-taskTitle"><input id="taskEditWindow-isEvent" type="checkBox">event</div>
+        <!-- save / cancel -->
+        <button id="taskEditWindow-cancelEdit" class="alterDataBase"> cancel </button>
+        <button id="taskEditWindow-saveEdit" class="alterDataBase"> save </button>
+
+        <!-- is done / title / event? -->
+        <div><input id="taskEditWindow-isTaskDone" type="checkBox">
+            <input id="taskEditWindow-taskTitle">
+            <input id="taskEditWindow-isEvent" type="checkBox">event</div>
+
+        <!-- scheduling option -->
         <div id="taskEditWindow-schedulingOption" >
             <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
             <label for="schedule">Schedule</label>
@@ -41,12 +47,14 @@
             <input type="radio" id="taskEditWindow-isNone" name="scheduleOption" >
             <label for="none">None</label>
         </div>
+
+        <!-- schedule  -->
         <div id="taskEditWindow-schedule">
             <input id="taskEditWindow-start" type="dateTime-local"> to <input id="taskEditWindow-due" type="dateTime-local">
             <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
             <div id="taskEditWindow-repeat">
                 <div id="taskEditWindow-repeatForm">
-                    Frequency: <input id="taskEditWindow-repeatFreq" type="number"> <br>
+                    Frequency: <input id="taskEditWindow-repeatFreq" type="number" min="1"> days <br>
                     repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
                     <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
                 </div>
@@ -75,6 +83,18 @@
         <button id="taskEditWindow-deleteTask"> delete</button>
         
         
+    </div>
+    <div style="position: absolute; left: 10; top: 400; z-index: 0;">
+        TaskDataBase  <div id="dataBase" style=" float: right"></div>
+    </div>
+    <div style="position: absolute; left: 10; top: 450; z-index: 0;">
+        Scheduled  <div id="schedule" style=" float: right"></div>
+    </div>
+    <div style="position: absolute; left: 10; top: 500; z-index: 0;">
+        MustDo  <div id="mustDo" style=" float: right"></div>
+    </div>
+    <div style="position: absolute; left: 10; top: 550; z-index: 0;">
+        ToDo  <div id="toDo" style=" float: right"></div>
     </div>
 </div>
 

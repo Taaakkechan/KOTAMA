@@ -27,3 +27,6 @@ TaskHandling
 - make visuals cleaner
 - add calender
 - make task templates?
+
+ui
+	-when adding components, lock duration so it equals the sum of component duration.

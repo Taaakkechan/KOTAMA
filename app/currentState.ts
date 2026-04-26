@@ -2,15 +2,10 @@ import { initTask } from 'app/task';
 
 export let currentState: CurrentState;
 
-function inititalizeCurrentState(): CurrentState {
-	const initalState: CurrentState = {
+export function initializeState(): void {
+	currentState = {
 		tempTask: initTask()
 	}
-	return initalState;
-}
-
-export function loadInitialState(): void {
-	currentState = inititalizeCurrentState();
 }
 
 // not working for some reason. Seems like it is reading off a different object?

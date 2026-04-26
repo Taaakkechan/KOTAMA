@@ -1,5 +1,5 @@
 interface Schedule {
-	content: ScheduledTask[]
+	tasks: ScheduledTask[]
 }
 
 

@@ -83,16 +83,18 @@ import { getTaskById } from 'app/dataBase';
 
 export function initTask(): Task {
 	const now = getCurrentTime();
-	const times: Scheduling = {
+	const times: ScheduleItem = {
 		start: now + 60 - (now % 60),
 		due: now + 120 - (now % 60),
-		duration: 60
+		duration: 60,
+		repeating: undefined
 	}
 
 	const newTask: Task = {
 		id: 0,
 		title: '',
 		description: '',
+		status: 'scheduled',
 		scheduling: times,
 		priority: 1,
 		dependancies: [],

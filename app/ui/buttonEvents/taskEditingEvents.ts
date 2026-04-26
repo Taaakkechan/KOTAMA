@@ -1,10 +1,11 @@
-import { updateAllLists } from 'app/ui/taskList';
+import { updateAllListUi } from 'app/ui/taskBlock';
 import { currentState } from 'app/currentState';
 import { removeComponent, removeDependancy, initTask } from 'app/task';
 import { divDisplay } from 'app/ui/display';
 import { taskEditWindow } from 'app/ui/htmlElements';
-import { removeTask, insertTask	} from 'app/dataBase';
+import { removeTask, insertTask } from 'app/dataBase';
 import { retrieveValue, resetTaskEditWindow } from 'app/ui/taskEditing';
+import { update } from 'app/update';
 
 const tewb = taskEditWindow.buttons;
 
@@ -17,32 +18,35 @@ export function taskEditingStaticEvents(): void {
 		retrieveValue(currentState.tempTask);
 		insertTask(currentState.tempTask);
 		currentState.tempTask = initTask();
-		updateAllLists();
+		update();
+		updateAllListUi();
 		resetTaskEditWindow();
-	})
+	});
 
 	// cancel edit
 	tewb.cancelEdit.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.main, false);
 		currentState.tempTask = initTask();
 		resetTaskEditWindow();
-	})
+	});
 
-	// delete edit
+	// delete task
 	tewb.deleteTask.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.main, false);
 		removeTask(currentState.tempTask.id);
 		currentState.tempTask = initTask();
-		updateAllLists();
+		update();
+		updateAllListUi();
 		resetTaskEditWindow();
-	})
+	});
+
 
 	tewb.addComponent.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.componentTaskSearch, true);
-	})
+	});
 	tewb.addDependancy.addEventListener('click', function () {
 		divDisplay(taskEditWindow.divs.dependancyTaskSearch, true);
-	})
+	});
 }
 
 
@@ -54,7 +58,7 @@ const tewd = taskEditWindow.divs
 export function componentSearchOnclick(taskBlock: HTMLButtonElement): void {
 	const compId = Number(taskBlock.value);
 	currentState.tempTask.components.push(compId);
-	updateAllLists();
+	updateAllListUi();
 	divDisplay(tewd.componentTaskSearch, false);		
 }
 
@@ -62,7 +66,7 @@ export function componentSearchOnclick(taskBlock: HTMLButtonElement): void {
 export function dependancySearchOnclick(taskBlock: HTMLButtonElement): void {
 	const depId = Number(taskBlock.value);
 	currentState.tempTask.dependancies.push(depId);
-	updateAllLists();
+	updateAllListUi();
 	divDisplay(tewd.dependancyTaskSearch, false);		
 }
 
@@ -70,12 +74,12 @@ export function dependancySearchOnclick(taskBlock: HTMLButtonElement): void {
 export function editingComponentOnclick(taskBlock: HTMLButtonElement): void {
 	const compId = Number(taskBlock.value);
 	removeComponent(currentState.tempTask, compId);
-	updateAllLists();
+	updateAllListUi();
 }
 
 // dependancy onclick
 export function editingDependancyOnclick(taskBlock: HTMLButtonElement): void {
 	const depId = Number(taskBlock.value);
 	removeDependancy(currentState.tempTask, depId);
-	updateAllLists();
+	updateAllListUi();
 }

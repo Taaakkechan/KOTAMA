@@ -14,11 +14,11 @@ function getDiv(id: string): HTMLDivElement {
 function getInput(id: string): HTMLInputElement {
 	return requireElementById(id) as HTMLInputElement;
 }
-export const taskDBList = getDiv('taskDBList');
-// export const taskListDiv = {
-// 	mustDo: getDiv('mustDo'),
-// 	toDo: getDiv('toDo')
-// }
+export const taskDBList = getDiv('dataBase');
+export const mustDoListDiv = getDiv('mustDo');
+export const toDoListDiv = getDiv('toDo');
+export const scheduleListDiv = getDiv('schedule');
+
 
 export const mainApp = getDiv('main');
 export const createNewTask = getButton('createNewTask');

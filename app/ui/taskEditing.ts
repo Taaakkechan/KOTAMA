@@ -1,10 +1,30 @@
-import { dateStringToNumber, numberToDateTimeString, numberToDateString } from 'app/date';
+import { dateStringToNumber, numberToDateTimeString, numberToDateString, getCurrentTime } from 'app/date';
 import { taskEditWindow } from 'app/ui/htmlElements';
-import { updateHtmlLists, removeAllTaskBlock } from 'app/ui/taskList';
+import { updateSearchListUi, removeAllTaskBlock } from 'app/ui/taskBlock';
 import { editingComponentOnclick, editingDependancyOnclick } from 'app/ui/buttonEvents/taskEditingEvents';
 import { getTaskDependancies, getTaskComponents } from 'app/task';
 
+function defaultTaskEditWindow(): void {
+
+	const now = getCurrentTime();
+	const tewi = taskEditWindow.inputs;
+
+	tewi.isDone.checked = false;
+	tewi.title.value = '';
+	tewi.isSchedule.checked = true;
+	tewi.start.value = numberToDateTimeString(now + 60 - (now % 60));
+	tewi.due.value = numberToDateTimeString(now + 120 - (now % 60));
+	tewi.duration.value = '60'
+	tewi.isRepeating.checked = false;
+	tewi.repeatFreq.value = '7';
+	tewi.repeatStart.value = numberToDateString(now - (now % 1440));
+	tewi.isRepeatEnd.checked = false;
+	tewi.repeatEnd.value = numberToDateString(now - (now % 1440) + (1440 * 30));
+}
+
 export function populateEditWindow(task: Task): void {
+
+	defaultTaskEditWindow();
 
 	const tewi = taskEditWindow.inputs;
 	const tewd = taskEditWindow.divs;
@@ -16,32 +36,32 @@ export function populateEditWindow(task: Task): void {
 	}
 
 	tewi.title.value = task.title;
-	if (task.scheduling === 'pending') {
+	if (task.status === 'pending') {
 		tewi.isPending.checked = true;
-	} else if (task.scheduling === 'none') {
+	} else if (task.status === 'none') {
 		tewi.isNone.checked = true;
-	} else {
-		const schedule = task.scheduling ;
+	} else if (task.scheduling) {
+		const schedule = task.scheduling;
 		tewi.isSchedule.checked = true;
 		tewi.start.value = numberToDateTimeString(schedule.start);
 		tewi.due.value = numberToDateTimeString(schedule.due);
 		tewi.duration.value = String(schedule.duration);
 		if (schedule.repeating) {
-			const repeating = schedule.repeating;
+			const rep = schedule.repeating;
 			tewi.isRepeating.checked = true;
-			tewi.repeatFreq.value = String(repeating.repeatFreq);
-			tewi.repeatStart.value = numberToDateString(repeating.repeatStart);
-			if (repeating.repeatEnd) {
+			tewi.repeatFreq.value = String(rep.freq / 1440);
+			tewi.repeatStart.value = numberToDateString(rep.start);
+			if (rep.end) {
 				tewi.isRepeatEnd.checked = true;
-				tewi.repeatEnd.value = numberToDateString(repeating.repeatEnd);
+				tewi.repeatEnd.value = numberToDateString(rep.end);
 			}
 		}
 
 	}
 	tewi.priority.value = String(task.priority);
 	tewi.description.value = task.description;
-	updateHtmlLists(getTaskComponents(task), tewd.componentList, 'taskBlock', editingComponentOnclick);
-	updateHtmlLists(getTaskDependancies(task), tewd.dependancyList, 'taskBlock', editingDependancyOnclick);
+	updateSearchListUi(tewd.componentList, getTaskComponents(task), editingComponentOnclick);
+	updateSearchListUi(tewd.dependancyList, getTaskDependancies(task), editingDependancyOnclick);
 }
 
 export function retrieveValue(task: Task): Task {
@@ -54,9 +74,9 @@ export function retrieveValue(task: Task): Task {
 	}
 
 	if (tewi.isPending.checked) {
-		task.scheduling = 'pending';
+		task.status = 'pending';
 	} else if (tewi.isNone.checked) {
-		task.scheduling = 'none';
+		task.status = 'none';
 	} else {
 		let repeat = undefined;
 		if (tewi.isRepeating.checked) {
@@ -66,16 +86,16 @@ export function retrieveValue(task: Task): Task {
 			if (tewi.isRepeatEnd.checked) {
 				repeatEnd = dateStringToNumber(tewi.repeatEnd.value);
 			}
-			if (task.scheduling != 'pending' && task.scheduling != 'none') {
+			if (task.scheduling) {
 				if (task.scheduling.repeating) {
 					exceptionIn = task.scheduling.repeating.exceptionIn;
 					exceptionOut = task.scheduling.repeating.exceptionIn;
 				}
 			}
 			repeat = {
-				repeatFreq: Number(tewi.repeatFreq.value),
-				repeatStart: dateStringToNumber(tewi.repeatStart.value),
-				repeatEnd: repeatEnd,
+				freq: Number(tewi.repeatFreq.value) * 1440,
+				start: dateStringToNumber(tewi.repeatStart.value),
+				end: repeatEnd,
 				exceptionIn: exceptionIn,
 				exceptionOut: exceptionOut,
 			}

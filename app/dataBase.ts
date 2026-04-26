@@ -37,9 +37,9 @@ export function getTaskById(id: number): Task {
 	if (id === 0) {
 		return initTask();
 	} 
-	for (let i = 0; i < dataBase.tasks.length; i++) {
-		if (id === dataBase.tasks[i].id) {
-			return dataBase.tasks[i];
+	for (const task of dataBase.tasks) {
+		if (id === task.id) {
+			return task;
 		}
 	}
 	throw new Error('task not found');
@@ -58,8 +58,8 @@ function getTaskIndex(id: number): number {
 }
 
 function isTaskExist(id: number): boolean {
-	for (let i = 0; i < dataBase.tasks.length; i++) {
-		if (id === dataBase.tasks[i].id) {
+	for (const task of dataBase.tasks) {
+		if (id === task.id) {
 			return true;
 		}
 	}
@@ -67,15 +67,14 @@ function isTaskExist(id: number): boolean {
 }
 export function removeTask(id: number): void {
 	if (isTaskExist(id)) {
-		const tasks = dataBase.tasks;
 		const index = getTaskIndex(id);
 		dataBase.tasks.splice(index, 1);
-		for (let i = 0; i < tasks.length; i++) {
-			if (tasks[i].components.length > 0) {
-				removeComponent(tasks[i], id);
+		for (const task of dataBase.tasks) {
+			if (task.components.length > 0) {
+				removeComponent(task, id);
 			}
-			if (tasks[i].dependancies.length > 0) {
-				removeDependancy(tasks[i], id);
+			if (task.dependancies.length > 0) {
+				removeDependancy(task, id);
 			}
 		}
 		saveData();

@@ -1,65 +1,87 @@
-// import { getCurrentUTCTime } from 'app/date';
+import { getCurrentTime } from 'app/date';
+import { dataBase } from 'app/dataBase';
 
-// // so schedule task just pushes tasks to schedule
-// // Let's think about validness after we do the MVP
-// export function scheduleTasks(schedule: Schedule, dataBase: DataBase, period: number): void {
-// 	const now = getCurrentUTCTime();
-// 	const windowEnd = now + period;
-// 	const taskDB = dataBase.tasks
-// 	for (let i = 0; i < taskDB.length; i++) {
-// 		const task = taskDB[i]
-// 		if (!task.components && task.due && task.duration) {
-// 			if (task.repeatFreq && task.start) {
 
-// 				// initialize repeat variables
-// 				let freq = 0;
-// 				let startDueDiff = task.due - task.start;
+// so schedule task just pushes tasks to schedule
+// Let's think about validness after we do the MVP
+export let schedule: Schedule;
 
-// 				// get each value
-// 				for (let i = 0; i < task.repeatFreq.length; i++) {
-// 					freq += task.repeatFreq[i];
-// 				}
-// 				if (startDueDiff < 0) {
-// 					startDueDiff = task.due + task.start;
-// 				}
+export function initializeSchedule(): void {
+	schedule = {
+		tasks: []
+	}
+}
 
-// 				const initialDue = now + freq - ((now - task.due) % freq)
-// 				for (let i = initialDue; i < windowEnd; i += freq) {
-// 					const date = new Date(i * 1000 * 60)
-// 					const newRepeatedTask: ScheduledTask = {
-// 						title: task.title,
-// 						subjects: task.subjects,
-// 						priority: task.priority,
-// 						owner: task.owner,
+export function scheduleTasks(periodStart: number, periodEnd: number): void {
 
-// 						description: task.description,
+	schedule.tasks = [];
 
-// 						start: i - startDueDiff + date.getTimezoneOffset(),
-// 						due: i + date.getTimezoneOffset(),
-// 						duration: task.duration,
+	const now = getCurrentTime();
 
-// 						dependancy: task.dependancy,
-// 					}
-// 					schedule.content.push(newRepeatedTask);
-// 				}
+	for (const task of dataBase.tasks) {
+		
+		if (task.scheduling) {
+			
+			const scheduling = task.scheduling;
+			const windowEnd = now + (periodEnd * 1440);
+			const windowStart = now + (periodStart * 1440);
+			
+
+			// when task repeats
+			if (scheduling.repeating) {
+
+				const scheduling = task.scheduling;
+				const rep = scheduling.repeating!;
+
+				let startDueDiff = scheduling.due - scheduling.start;
+				if (startDueDiff < 0) {
+					startDueDiff = scheduling.due + scheduling.start;
+				}
+
+				const initialDue = Math.max(rep.start + rep.freq - ((rep.start - scheduling.due) % rep.freq), windowStart);
+				let finalDue = windowEnd;
 				
-// 			} else if ((windowEnd > task.due) && (now < task.due)) {
-// 				const newTask: ScheduledTask = {
-// 					title: task.title,
-// 					subjects: task.subjects,
-// 					priority: task.priority,
-// 					owner: task.owner,
+				if (rep.end) {
+					finalDue = Math.min(rep.end, windowEnd);
+				}
+				for (let i = initialDue; i < finalDue; i += rep.freq) {
+					
+					const date = new Date(i * 1000 * 60)
+					const newRepeatedTask: ScheduledTask = {
+						id: task.id,
+						title: task.title,
+						subjects: task.subjects,
+						priority: task.priority,
+						owner: task.owner,
 
-// 					description: task.description,
+						start: i - startDueDiff + date.getTimezoneOffset(),
+						due: i + date.getTimezoneOffset(),
+						duration: scheduling.duration,
 
-// 					start: task.start,
-// 					due: task.due,
-// 					duration: task.duration,
+						dependancies: task.dependancies,
+					}
+					schedule.tasks.push(newRepeatedTask);
+				}
+				console.log(schedule.tasks);
 
-// 					dependancy: task.dependancy,
-// 				}
-// 				schedule.content.push(newTask);
-// 			}
-// 		}
-// 	}
-// }
+			// when task does not repeat
+			} else if ((windowEnd > scheduling.due) && (now < scheduling.due)) {
+				const newTask: ScheduledTask = {
+					id: task.id,
+					title: task.title,
+					subjects: task.subjects,
+					priority: task.priority,
+					owner: task.owner,
+
+					start: scheduling.start,
+					due: scheduling.due,
+					duration: scheduling.duration,
+
+					dependancies: task.dependancies,
+				}
+				schedule.tasks.push(newTask);
+				console.log(schedule.tasks);
+			}
+		}
+	}
+}

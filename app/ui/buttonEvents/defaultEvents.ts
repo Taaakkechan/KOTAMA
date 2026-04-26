@@ -4,7 +4,7 @@ import { divDisplay } from 'app/ui/display';
 import { taskEditWindow, createNewTask } from 'app/ui/htmlElements';
 import { getTaskById, dataBase } from 'app/dataBase';
 import { populateEditWindow } from 'app/ui/taskEditing';
-// import { updateAllLists } from 'app/ui/taskList';
+// import { updateAllListUi } from 'app/ui/taskList';
 
 // const currentState = getCurrentState();
 

@@ -1,5 +1,5 @@
 // import { testInputs } from 'app/development/testInput';
-import { loadDataBase,clearSavedData } from 'app/dataBase';
+import { clearSavedData } from 'app/dataBase';
 // import { taskHandler } from 'app/taskHandler';
 // import { scheduleTasks } from 'app/schedule';
 import { updateTaskEditWindowDisplay } from 'app/ui/display';
@@ -7,22 +7,11 @@ import { updateTaskEditWindowDisplay } from 'app/ui/display';
 // import { getCurrentTime, numberToDateTimeString, dateStringToNumber } from 'app/date';
 // import { initTask } from 'app/task';
 import { eventListeners } from 'app/ui/eventListener';
-import { loadInitialState } from 'app/currentState';
 // import { retrieveValue } from 'app/ui/taskEdit';
+import { initializeProgram } from 'app/initialize';
 
 clearSavedData();
-loadInitialState();
-loadDataBase();
-
-// let schedule: Schedule = {
-// 	content: []
-// }
-
-// let taskLists: TaskLists = {
-// 	mustDo: [],
-// 	toDo: []
-// }
-
+initializeProgram();
 eventListeners();
 
 function update(): void {

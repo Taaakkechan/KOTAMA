@@ -1,7 +1,7 @@
 interface RepeatingItem {
-	repeatFreq: number
-	repeatStart: number
-	repeatEnd?: number
+	freq: number
+	start: number
+	end?: number
 	exceptionIn: ScheduledTask[]
 	exceptionOut: ScheduledTask[]
 }
@@ -14,13 +14,15 @@ interface ScheduleItem {
 	repeating?: RepeatingItem
 }
 
-type Scheduling = ScheduleItem | 'pending' | 'none';
+type Status = 'scheduled' | 'pending' | 'none';
 
 interface Task {
 	id: number
 	title: string
 	description: string
-	scheduling: Scheduling
+	status: Status
+	scheduling?: ScheduleItem
+
 
 	subjects: string[]
 	priority: number
@@ -33,18 +35,17 @@ interface Task {
 }
 
 interface ScheduledTask {
+	id: number
 	title: string
 	//create date interface
 	start: number
 	due: number
 	duration: number
 	priority: number
-	taskId: number
-}
 
-// the thing that represents the task with only title
-interface TaskBox {
-	title: string
-	dimensions: Rect
-	color: string
+	subjects: string[]
+	priority: number
+	owner: string[]
+
+	dependancies: number[]
 }
