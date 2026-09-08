@@ -61,3 +61,28 @@ And yeah, google cal deals with that nicely. Just try and copy how google calend
 real question is getting the logic to work.
 But before that, we have a couple more ui problems to deal with like dependancies and components.
 and for that we need lists too. But once we get that down we are good to go(i think).
+
+-----Goal------
+
+Make an app so I can divide my brain into the adult me and the child me.
+adult me can see what needs to happen, and getting child me to do it.
+child me does what ever seems fun.
+
+The motivation for this project is that, I have way too many things to keep track of, and it is alot of work trying to be on top of everything. 
+
+So I want a place where I can store all my intellectuals, notes, tasks, events, plans... everything. Storing data in a file type-ish structure. 
+
+On top of that, I want to have a calendar based off of the tasks and events that I have set up in the database to see my future and what to expect in a glance. 
+
+ON TOP OF THAT, I want an ui where I can easily plan my day / week (/ month / year / decade / life).
+
+I want the computer to do all the calculations for planning and me just executing it, taking communication when necessary.
+The thing I was trying to achieve in notion but didn't work out. So I just want to make my own version.
+
+It all boils down to. I don't want to think what to do! Just tell me what to do!!!
+
+
+-----Functions of this app-----
+
+
+

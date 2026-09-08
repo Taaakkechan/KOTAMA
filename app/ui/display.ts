@@ -21,22 +21,16 @@ export function updateTaskEditWindowDisplay(): void {
 		tewi.isDone.style.display = 'block';
 	}
 
-	if (tewi.isSchedule.checked) {
-		tewd.schedule.style.display = 'block';
+	if (tewi.isRepeating.checked) {
+		tewd.repeat.style.display = 'block';
 
-		if (tewi.isRepeating.checked) {
-			tewd.repeat.style.display = 'block';
-
-			if (tewi.isRepeatEnd.checked) {
-				tewi.repeatEnd.style.display = 'block';
-			} else {
-				tewi.repeatEnd.style.display = 'none';
-			}
+		if (tewi.isRepeatEnd.checked) {
+			tewi.repeatEnd.style.display = 'block';
 		} else {
-			tewd.repeat.style.display = 'none';
+			tewi.repeatEnd.style.display = 'none';
 		}
 	} else {
-		tewd.schedule.style.display = 'none';
+		tewd.repeat.style.display = 'none';
 	}
 }
 

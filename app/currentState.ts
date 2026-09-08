@@ -1,10 +1,16 @@
-import { initTask } from 'app/task';
+import { initTask, getFirstInstance } from 'app/task';
 
 export let currentState: CurrentState;
 
 export function initializeState(): void {
+	const defaultTask = initTask();
+	const occurrence = defaultTask.occurrences[0];
+	const instance = getFirstInstance(occurrence);
+	
 	currentState = {
-		tempTask: initTask()
+		tempTask: defaultTask,
+		tempOccur: occurrence,
+		tempInst: instance
 	}
 }
 

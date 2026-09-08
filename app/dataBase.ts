@@ -1,13 +1,12 @@
-import { initTask, removeComponent, removeDependancy } from 'app/task';
+import { initTask } from 'app/task';
 
 export let dataBase: DataBase;
 
 function initializeDataBase(): DataBase {
 	const defaultDataBase: DataBase = {
 		tasks: [],
-		taskTemplates: [],
-		subjects: [],
-		nextId: 1
+		nextTaskID: 1,
+		nextOccurrenceID: 1
 	}
 	return defaultDataBase;
 }
@@ -46,7 +45,7 @@ export function getTaskById(id: number): Task {
 }
 
 function getTaskIndex(id: number): number {
-	if (id <= 0 || id >= dataBase.nextId) {
+	if (id <= 0 || id >= dataBase.nextTaskID) {
 		throw new Error('invalid id');
 	} 
 	for (let i = 0; i < dataBase.tasks.length; i++) {
@@ -65,36 +64,63 @@ function isTaskExist(id: number): boolean {
 	}
 	return false;
 }
+
 export function removeTask(id: number): void {
 	if (isTaskExist(id)) {
 		const index = getTaskIndex(id);
 		dataBase.tasks.splice(index, 1);
-		for (const task of dataBase.tasks) {
-			if (task.components.length > 0) {
-				removeComponent(task, id);
-			}
-			if (task.dependancies.length > 0) {
-				removeDependancy(task, id);
-			}
-		}
 		saveData();
 	} else {throw new Error('task not found');}
 }
 
-export function insertTask(task: Task): void {
-	if (task.id === dataBase.nextId) {
-		dataBase.tasks.push(task);
-		dataBase.nextId++;
+export function generateOccurenceID(taskID: number, uniqueNumber: number): string {
+	const newID = String(taskID) + 'T' + String(uniqueNumber);
+	return newID;
+}
 
-	} else if (task.id < dataBase.nextId) {
+export function getbaseTaskID(id: string): number {
+	let TaskID = '';
+	for (let i = 0; id[i] != 'T'; i++) {
+		TaskID += id[i];
+	}
+	return Number(TaskID);
+}
+
+export function getTaskByOccurrenceID(id: string): Task {
+	return getTaskById(getBaseTaskID(id));
+}
+
+export function getOccurrenceByID(id: string): Occurrence {
+	const baseTask = getTaskByOccurrenceID(id);
+	for (const occurrence of baseTask.occurrences) {
+		if (occurrence.id === id) {
+			return occurrence;
+		}
+	if (baseTask.completed) {
+		for (const occurrence of baseTask.completed) {
+			if (occurrence.id === id) {
+				return occurrence;
+			}
+		}
+	} throw new Error('Occurrence Not Found');
+}
+
+function changeAllOccurrence()
+
+
+
+export function insertTask(task: Task): void {
+ 	if (task.id < dataBase.nextTaskID) {
 		if (isTaskExist(task.id)) {
+
 			const index = getTaskIndex(task.id);
+
+			// replace with the new task
 			dataBase.tasks.splice(index, 1, task);
 			saveData();
 		} else {throw new Error('task not found');}
 	} else {throw new Error('invalid id');}
 }
-
 
 export function saveData(): void {
 	localStorage.setItem("savedData", JSON.stringify(dataBase));	

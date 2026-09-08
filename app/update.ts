@@ -1,8 +1,7 @@
-import { scheduleTasks } from 'app/schedule';
-import { saveData } from 'app/dataBase';
+import { updateTaskEditWindowDisplay } from 'app/ui/display';
+import { updateAllListUi } from 'app/ui/taskBlock';
 
 export function update(): void {
-	saveData();
-	// parameter is schedule window in days.
-	scheduleTasks(-30, 30);
-}	
+	updateAllListUi();
+	updateTaskEditWindowDisplay();
+}

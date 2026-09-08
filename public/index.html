@@ -24,10 +24,33 @@
 <!-- game -->
 <div id="main">
 
-    <button id="createNewTask">+</button>
+    <button id="createNewTask">+ Create</button>
+
+    <!-- task view window -->
+    <div id="taskViewWindow">
+        <div id="viewBaseTask">
+            <div class="editingOptions">
+                <button id="createNewInstance">+I</button>
+                <button id="editBaseTask">E</button>
+                <button id="deleteTask">D</button>
+            </div>
+            <div id="baseTaskContents">
+                <div id="baseTaskContents-title">title</div>
+                <div id="baseTaskContents-description">blah-blah</div>
+                <div id="baseTaskContents-priority">100</div>
+                <div id="baseTaskContents-duration">500years</div>
+            </div>
+        </div>
+        <div id="viewInstance">
+            <div class="editingOptions">
+                <button id="editInstance">E</button>
+                <button id="deleteInstance">D</button>
+            </div>
+        </div>
+    </div>
 
     <!-- task edit window -->
-    <div id="taskEditWindow" style="background-color: lightgrey; display: none; z-index: 1;">
+    <div id="taskEditWindow" style="background-color: lightgrey; display: block; z-index: 1;">
         
         <!-- save / cancel -->
         <button id="taskEditWindow-cancelEdit" class="alterDataBase"> cancel </button>
@@ -38,24 +61,13 @@
             <input id="taskEditWindow-taskTitle">
             <input id="taskEditWindow-isEvent" type="checkBox">event</div>
 
-        <!-- scheduling option -->
-        <div id="taskEditWindow-schedulingOption" >
-            <input type="radio" id="taskEditWindow-isSchedule" name="scheduleOption" >
-            <label for="schedule">Schedule</label>
-            <input type="radio" id="taskEditWindow-isPending" name="scheduleOption" >
-            <label for="pending">Pending</label>
-            <input type="radio" id="taskEditWindow-isNone" name="scheduleOption" >
-            <label for="none">None</label>
-        </div>
-
         <!-- schedule  -->
         <div id="taskEditWindow-schedule">
             <input id="taskEditWindow-start" type="dateTime-local"> to <input id="taskEditWindow-due" type="dateTime-local">
             <input id="taskEditWindow-isRepeating" type="checkBox"> Repeat 
             <div id="taskEditWindow-repeat">
-                <div id="taskEditWindow-repeatForm">
+                <div id="taskEditWindow-repeatForm" style="display: none;">
                     Frequency: <input id="taskEditWindow-repeatFreq" type="number" min="1"> days <br>
-                    repeatStart: <input id="taskEditWindow-repeatStartDate" type="date"><br>
                     <input id="taskEditWindow-isRepeatEnd" type="checkBox">repeatEnd: <input id="taskEditWindow-repeatEndDate" type="date">
                 </div>
             </div>
@@ -65,21 +77,8 @@
         <div>priority: <input id="taskEditWindow-priority" type="number"></div>
         <div><input id="taskEditWindow-description"></div>
         
-        <div>dependancies<button id="taskEditWindow-addDependancy">+</button>
-            <div id="taskEditWindow-dependancyList"></div>
-        </div>
-        <div style="z-index: 3; background: grey; display: block;"><div id="taskEditWindow-dependancy-taskSearch" style="display: none;"></div></div>
-        <div>components<button id="taskEditWindow-addComponent">+</button>
-            <div id="taskEditWindow-componentList"></div>
-        </div>
-        <div style="z-index: 3; background: grey; display: block;"><div id="taskEditWindow-component-taskSearch" style="display: none;"></div></div>
-        <div id="taskEditWindow-subjects"> subjects
-            <div id="taskEditWindow-subjectList"></div>
-        </div>
-        <div id="taskEditWindow-owner"> owner 
-            <div id="taskEditWindow-ownerList"></div>
-        </div>
-        delete
+
+        <!-- delete -->
         <button id="taskEditWindow-deleteTask"> delete</button>
         
         
@@ -89,12 +88,6 @@
     </div>
     <div style="position: absolute; left: 10; top: 450; z-index: 0;">
         Scheduled  <div id="schedule" style=" float: right"></div>
-    </div>
-    <div style="position: absolute; left: 10; top: 500; z-index: 0;">
-        MustDo  <div id="mustDo" style=" float: right"></div>
-    </div>
-    <div style="position: absolute; left: 10; top: 550; z-index: 0;">
-        ToDo  <div id="toDo" style=" float: right"></div>
     </div>
 </div>
 

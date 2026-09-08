@@ -1,51 +1,34 @@
-interface RepeatingItem {
-	freq: number
-	start: number
-	end?: number
-	exceptionIn: ScheduledTask[]
-	exceptionOut: ScheduledTask[]
-}
-
-
-interface ScheduleItem {
-	due: number
-	start: number
-	duration: number
-	repeating?: RepeatingItem
-}
-
-type Status = 'scheduled' | 'pending' | 'none';
+// decided I don't need status for a calendar app
+//type Status = 'scheduled' | 'pending' | 'none';
 
 interface Task {
 	id: number
+	//default task title
 	title: string
 	description: string
-	status: Status
-	scheduling?: ScheduleItem
-
-
-	subjects: string[]
-	priority: number
-	owner: string[]
-
-	dependancies: number[]
-	components: number[]
-
-	completed?: boolean
-}
-
-interface ScheduledTask {
-	id: number
-	title: string
-	//create date interface
-	start: number
-	due: number
 	duration: number
 	priority: number
+	occurrences: TaskOccurrence[]
+	completed?: TaskOccurrence[]
+}
 
-	subjects: string[]
-	priority: number
-	owner: string[]
+interface TaskOccurrence {
+	id: string
+	//occurrence specific task title, defaults to original task title
+	title?: string
+	start: number
+	due: number
+	repeating?: RepeatingItem
+	//doing dependancies is complicated is should be a project for another time
+}
 
-	dependancies: number[]
+interface RepeatingItem {
+	freq: number
+	end?: number
+}
+
+interface TaskInstance {
+	occurrenceID: string
+	start: number
+	due: number
 }

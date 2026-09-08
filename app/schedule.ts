@@ -20,67 +20,52 @@ export function scheduleTasks(periodStart: number, periodEnd: number): void {
 
 	for (const task of dataBase.tasks) {
 		
-		if (task.scheduling) {
+		if (task.occurrences.length != 0) {
 			
-			const scheduling = task.scheduling;
 			const windowEnd = now + (periodEnd * 1440);
 			const windowStart = now + (periodStart * 1440);
 			
+			for (const occurrence of task.occurrences) {
 
-			// when task repeats
-			if (scheduling.repeating) {
+				// when task repeats
+				if (occurrence.repeating) {
 
-				const scheduling = task.scheduling;
-				const rep = scheduling.repeating!;
+					const rep = occurrence.repeating!;
 
-				let startDueDiff = scheduling.due - scheduling.start;
-				if (startDueDiff < 0) {
-					startDueDiff = scheduling.due + scheduling.start;
-				}
 
-				const initialDue = Math.max(rep.start + rep.freq - ((rep.start - scheduling.due) % rep.freq), windowStart);
-				let finalDue = windowEnd;
-				
-				if (rep.end) {
-					finalDue = Math.min(rep.end, windowEnd);
-				}
-				for (let i = initialDue; i < finalDue; i += rep.freq) {
+					let startDueDiff = occurrence.due - occurrence.start;
+
+					// defining initial and final due
+					const initialDue = Math.max(occurrence.start + rep.freq - ((occurrence.start - occurrence.due) % rep.freq), windowStart);
 					
-					const date = new Date(i * 1000 * 60)
-					const newRepeatedTask: ScheduledTask = {
-						id: task.id,
-						title: task.title,
-						subjects: task.subjects,
-						priority: task.priority,
-						owner: task.owner,
-
-						start: i - startDueDiff + date.getTimezoneOffset(),
-						due: i + date.getTimezoneOffset(),
-						duration: scheduling.duration,
-
-						dependancies: task.dependancies,
+					let finalDue = windowEnd;
+					
+					if (rep.end) {
+						finalDue = Math.min(rep.end, windowEnd);
 					}
-					schedule.tasks.push(newRepeatedTask);
+
+					// copying tasks
+					for (let i = initialDue; i < finalDue; i += rep.freq) {
+						
+						const date = new Date(i * 1000 * 60)
+						const newRepeatingTask: ScheduledTask = {
+							occurrenceID: occurrence.id,
+							start: i - startDueDiff + date.getTimezoneOffset(),
+							due: i + date.getTimezoneOffset(),
+						}
+						schedule.tasks.push(newRepeatingTask);
+					}
+
+				// when task does not repeat
+				} else if ((windowEnd > occurrence.due) && (now < occurrence.due)) {
+					const newTask: ScheduledTask = {
+						occurrenceID: occurrence.id,
+						start: occurrence.start,
+						due: occurrence.due,
+					}
+					schedule.tasks.push(newTask);
+					console.log(schedule.tasks);
 				}
-				console.log(schedule.tasks);
-
-			// when task does not repeat
-			} else if ((windowEnd > scheduling.due) && (now < scheduling.due)) {
-				const newTask: ScheduledTask = {
-					id: task.id,
-					title: task.title,
-					subjects: task.subjects,
-					priority: task.priority,
-					owner: task.owner,
-
-					start: scheduling.start,
-					due: scheduling.due,
-					duration: scheduling.duration,
-
-					dependancies: task.dependancies,
-				}
-				schedule.tasks.push(newTask);
-				console.log(schedule.tasks);
 			}
 		}
 	}

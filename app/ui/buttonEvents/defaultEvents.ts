@@ -13,8 +13,9 @@ export function defaultStaticEvents(): void {
 
 	// new task
 	createNewTask.addEventListener('click', function () {
-		currentState.tempTask.id = dataBase.nextId;
-		populateEditWindow(currentState.tempTask);
+		currentState.tempTask.id = dataBase.nextTaskID;
+		currentState.tempOccur.id = dataBase.nextOccurrenceID;
+		populateEditWindow(currentState.tempTask, currentState.tempOccur);
 		divDisplay(taskEditWindow.divs.main, true);
 	})
 }

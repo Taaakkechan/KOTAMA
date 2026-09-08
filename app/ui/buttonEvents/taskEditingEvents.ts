@@ -1,6 +1,5 @@
-import { updateAllListUi } from 'app/ui/taskBlock';
 import { currentState } from 'app/currentState';
-import { removeComponent, removeDependancy, initTask } from 'app/task';
+import { initTask } from 'app/task';
 import { divDisplay } from 'app/ui/display';
 import { taskEditWindow } from 'app/ui/htmlElements';
 import { removeTask, insertTask } from 'app/dataBase';
@@ -14,14 +13,32 @@ export function taskEditingStaticEvents(): void {
 
 	// save edit
 	tewb.saveEdit.addEventListener('click', function () {
+
 		divDisplay(taskEditWindow.divs.main, false);
+
+		// sets the currentState to the edited tasks
 		retrieveValue(currentState.tempTask);
-		insertTask(currentState.tempTask);
-		currentState.tempTask = initTask();
-		update();
-		updateAllListUi();
-		resetTaskEditWindow();
+
+		// check if it is a new task or not
+		if (currentState.tempTask.id === dataBase.nextTaskID) {
+			dataBase.tasks.push(task);
+			dataBase.nextTaskID++;
+			saveData();
+			initializeState();
+			update();
+			resetTaskEditWindow();
+		} else {
+			// detect whether schedule has been changed
+			
+			// if schedule changed >>> show form (1. change all 2. change this only 3. change from now on)
+		}
 	});
+
+	// change all occurences Button
+
+	// change this instance Button
+
+	// change this all occurrences from now on. Button
 
 	// cancel edit
 	tewb.cancelEdit.addEventListener('click', function () {
@@ -36,50 +53,6 @@ export function taskEditingStaticEvents(): void {
 		removeTask(currentState.tempTask.id);
 		currentState.tempTask = initTask();
 		update();
-		updateAllListUi();
 		resetTaskEditWindow();
 	});
-
-
-	tewb.addComponent.addEventListener('click', function () {
-		divDisplay(taskEditWindow.divs.componentTaskSearch, true);
-	});
-	tewb.addDependancy.addEventListener('click', function () {
-		divDisplay(taskEditWindow.divs.dependancyTaskSearch, true);
-	});
-}
-
-
-// I have no idea how the program will like the cross reference with using this function in updateLists
-
-const tewd = taskEditWindow.divs
-
-// component search onclick
-export function componentSearchOnclick(taskBlock: HTMLButtonElement): void {
-	const compId = Number(taskBlock.value);
-	currentState.tempTask.components.push(compId);
-	updateAllListUi();
-	divDisplay(tewd.componentTaskSearch, false);		
-}
-
-// dependancy search onclick
-export function dependancySearchOnclick(taskBlock: HTMLButtonElement): void {
-	const depId = Number(taskBlock.value);
-	currentState.tempTask.dependancies.push(depId);
-	updateAllListUi();
-	divDisplay(tewd.dependancyTaskSearch, false);		
-}
-
-// component onclick
-export function editingComponentOnclick(taskBlock: HTMLButtonElement): void {
-	const compId = Number(taskBlock.value);
-	removeComponent(currentState.tempTask, compId);
-	updateAllListUi();
-}
-
-// dependancy onclick
-export function editingDependancyOnclick(taskBlock: HTMLButtonElement): void {
-	const depId = Number(taskBlock.value);
-	removeDependancy(currentState.tempTask, depId);
-	updateAllListUi();
 }
